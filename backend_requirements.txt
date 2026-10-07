@@ -1,0 +1,46 @@
+# Backend Requirements
+# Install with: pip install -r backend_requirements.txt
+
+# Web Framework
+Flask==2.3.3
+Flask-CORS==4.0.0
+
+# Database driver
+# Flask-MySQLdb is the Flask integration layer; it requires the `MySQLdb`
+# module, which is provided by the `mysqlclient` package below (the
+# actively maintained, Python-3-compatible successor to the old
+# "MySQL-python" library). PyMySQL is intentionally NOT listed here --
+# backend.py only ever imports MySQLdb, so a second driver is dead weight.
+Flask-MySQLdb==1.0.1
+mysqlclient==2.2.4
+
+# Password hashing (ships with Flask as a transitive dependency; pinned
+# explicitly here because backend.py calls werkzeug.security directly)
+Werkzeug==2.3.7
+
+# Data Processing
+pandas==2.1.3
+numpy==1.26.4
+
+# Utilities
+python-dotenv==1.0.0
+python-dateutil==2.8.2
+
+# Testing
+requests==2.31.0
+pytest==7.4.2
+
+# ----------------------------------------------------------------------
+# Installing mysqlclient
+# ----------------------------------------------------------------------
+# mysqlclient compiles against the MySQL/MariaDB client library, so a
+# C compiler and the client dev headers must be present:
+#
+#   Linux (Debian/Ubuntu):
+#       sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
+#   macOS:
+#       brew install mysql-client pkg-config
+#       export PKG_CONFIG_PATH="$(brew --prefix mysql-client)/lib/pkgconfig"
+#   Windows:
+#       pip install mysqlclient      # usually installs from a prebuilt wheel
+#       # if that fails, install "Microsoft C++ Build Tools" first
