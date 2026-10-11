@@ -34,3 +34,7 @@ htmlcov/
 *.log
 *.sqlite3
 instance/
+
+# Temporary and scratch files
+scratch/
+*.bak

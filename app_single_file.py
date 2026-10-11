@@ -13,6 +13,8 @@ from pathlib import Path
 
 import pymysql
 import streamlit as st
+import streamlit.components.v1 as components
+import textwrap
 import time
 from datetime import datetime
 from dotenv import load_dotenv
@@ -212,232 +214,543 @@ POSSIBLE_GAPS = [
 # ============================================================================
 
 def apply_custom_css():
-    """Apply custom CSS styling to the application."""
+    """Apply custom CSS styling to the application matching the dark chalkboard pill aesthetic."""
     st.markdown("""
     <style>
-        /* Main styling */
+        /* 1. Global Dark Chalkboard Theme */
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --success-color: #16a34a;
-            --danger-color: #dc2626;
-            --warning-color: #ea580c;
-            --light-bg: #f8fafc;
-            --border-color: #e2e8f0;
-        }
-        
-        /* Base text color - dark text by default */
-        body, .main, p, span, div, a, li, label {
-            color: #1e293b !important;
-        }
-        
-        /* Light text on dark backgrounds */
-        div[style*="color: #f8fafc"],
-        div[style*="background: #2a2a2a"],
-        div[style*="background: #1a1a1a"],
-        div[style*="background: #0f0f0f"],
-        div[style*="background: #111"],
-        div[style*="background: #222"],
-        div[style*="background-color: #2a2a2a"],
-        div[style*="background-color: #1a1a1a"],
-        div[style*="background-color: #0f0f0f"] {
-            color: #ffffff !important;
-        }
-        
-        /* Ensure text inside dark containers is light */
-        div[style*="background-color: #2a2a2a"] *,
-        div[style*="background-color: #1a1a1a"] *,
-        div[style*="background-color: #0f0f0f"] *,
-        div[style*="background: #2a2a2a"] *,
-        div[style*="background: #1a1a1a"] *,
-        div[style*="background: #0f0f0f"] * {
-            color: #ffffff !important;
-        }
-        
-        /* Page container */
-        .main {
-            padding: 2rem;
-            color: #1e293b;
-        }
-        
-        /* Headers */
-        h1 {
-            color: #1e293b !important;
-            border-bottom: 3px solid #2563eb;
-            padding-bottom: 1rem;
-        }
-        
-        h2 {
-            color: #1e293b !important;
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        h3 {
-            color: #1e293b !important;
-        }
-        
-        /* Cards and containers */
-        .card {
-            background-color: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Form elements */
-        .stTextInput > div > div > input,
-        .stPasswordInput > div > div > input,
-        .stTextArea > div > div > textarea,
-        .stSelectbox > div > div > select {
-            border-radius: 6px;
-            border: 1px solid #cbd5e1;
-            padding: 0.75rem;
-        }
-        
-        /* Buttons */
-        .stButton > button {
-            background-color: #2563eb;
-            color: white !important;
-            border-radius: 6px;
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            border: none;
-            transition: all 0.3s ease;
-        }
-        
-        .stButton > button:hover {
-            background-color: #1e40af;
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
-            color: white !important;
-        }
-        
-        /* Success message */
-        .success-box {
-            background-color: #dcfce7;
-            border-left: 4px solid #16a34a;
-            padding: 1rem;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-        }
-        
-        /* Warning message */
-        .warning-box {
-            background-color: #fef08a;
-            border-left: 4px solid #ea580c;
-            padding: 1rem;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-        }
-        
-        /* Info message */
-        .info-box {
-            background-color: #dbeafe;
-            border-left: 4px solid #2563eb;
-            padding: 1rem;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-        }
-        
-        /* Project card */
-        .project-card {
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .project-card:hover {
-            border-color: #2563eb;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
-        }
-        
-        /* Metric badge */
-        .metric-badge {
-            display: inline-block;
-            background-color: #dbeafe;
-            color: #1e40af !important;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        /* Ensure all text is readable regardless of background */
-        p {
-            color: #1e293b !important;
-        }
-        
-        /* Handle streamlit components */
-        .stMarkdown {
-            color: #1e293b;
-        }
-        
-        /* Light backgrounds with dark text */
-        div, section, article {
-            color: #1e293b;
-        }
-        
-        /* Code blocks and pre-formatted text */
-        code, pre {
-            color: #1e293b !important;
-            background-color: #f0f0f0;
-        }
-        
-        /* Streamlit specific components */
-        .stCode {
-            color: #1e293b !important;
-        }
-        
-        /* All text elements must be dark */
-        span, li, td, th {
-            color: #1e293b !important;
-        }
-        
-        /* Override any light gray that might be in streamlit defaults */
-        [data-testid] {
-            color: #1e293b !important;
-        }
-        
-        /* Ensure links are readable */
-        a {
-            color: #2563eb !important;
-        }
-        
-        /* Button text always white */
-        button {
-            color: white !important;
-        }
-        
-        button:hover {
-            color: white !important;
+            --primary-color: #ffffff;
+            --secondary-color: #94a3b8;
+            --success-color: #4ade80;
+            --danger-color: #f87171;
+            --warning-color: #fb923c;
+            --chalk-bg: #0b0b0f;
+            --chalk-card: rgba(26, 26, 34, 0.75);
+            --chalk-border: rgba(255, 255, 255, 0.85);
         }
 
-        .login-title {
+        [data-testid="stAppViewContainer"] {
+            background-color: #0b0b0f !important;
+            background: radial-gradient(circle at 60% 40%, #161622 0%, #0b0b0f 85%) !important;
+            color: #ffffff !important;
+            overflow-x: hidden !important;
+        }
+
+        [data-testid="stHeader"] {
+            background: transparent !important;
+            color: #ffffff !important;
+        }
+
+        /* 2. Left Sidebar (Matching Mockup) */
+        [data-testid="stSidebar"] {
+            background-color: #0d0d14 !important;
+            background: #0d0d14 !important;
+            border-right: 1.5px solid rgba(255, 255, 255, 0.4) !important;
+        }
+
+        [data-testid="stSidebar"] * {
+            color: #ffffff !important;
+        }
+
+        /* Sidebar Brand Pill */
+        .sidebar-brand-pill {
+            width: 100%;
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            border-radius: 9999px;
+            background: rgba(35, 35, 45, 0.65);
+            color: #ffffff;
+            text-align: center;
+            padding: 0.65rem 1rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+        }
+
+        .sidebar-divider {
+            width: 100%;
+            height: 1.5px;
+            background: rgba(255, 255, 255, 0.85);
+            margin: 0.75rem 0 1.25rem 0;
+        }
+
+        .sidebar-user-name {
+            font-size: 1.15rem;
+            color: #ffffff !important;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            padding-left: 0.25rem;
+        }
+
+        /* Sidebar Pill Navigation Buttons */
+        [data-testid="stSidebar"] .stButton > button {
+            width: 100% !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.85) !important;
+            border-radius: 9999px !important;
+            background: rgba(85, 85, 95, 0.75) !important;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            font-size: 0.95rem !important;
+            font-weight: 500 !important;
+            padding: 0.65rem 1.2rem !important;
+            margin-bottom: 0.75rem !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        [data-testid="stSidebar"] .stButton > button:hover {
+            background: #ffffff !important;
+            color: #0b0b0f !important;
+            -webkit-text-fill-color: #0b0b0f !important;
+            font-weight: 600 !important;
+            box-shadow: 0 0 16px rgba(255, 255, 255, 0.5) !important;
+            transform: translateY(-1px) !important;
+        }
+
+        /* 3. Main Content Container */
+        .main {
+            background: transparent !important;
+            color: #ffffff !important;
+            padding: 1.5rem 2.5rem !important;
+        }
+
+        .main .block-container {
+            max-width: 1100px !important;
+            padding: 1.5rem 1rem !important;
+            background: transparent !important;
+        }
+
+        /* 4. Dashboard Specific Components (Exact Mockup Match) */
+        .dash-welcome-pill {
+            width: min(620px, 94%);
+            margin: 1rem auto 2.2rem auto;
+            padding: 1.35rem 3rem;
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            border-radius: 9999px;
+            background: rgba(26, 26, 34, 0.75);
+            backdrop-filter: blur(14px);
+            text-align: center;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+        }
+
+        .dash-welcome-title {
+            font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 0.35rem;
+            letter-spacing: 0.4px;
+        }
+
+        .dash-welcome-subtitle {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            font-weight: 400;
+        }
+
+        /* 3 Stats Pills (Capsules / Ovals) */
+        .dash-stat-pill {
+            width: 100%;
+            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            border-radius: 9999px;
+            background: rgba(26, 26, 34, 0.75);
+            backdrop-filter: blur(12px);
+            padding: 1.25rem 1rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .dash-stat-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 16px rgba(255, 255, 255, 0.25);
+        }
+
+        .dash-stat-label {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        .dash-stat-value {
+            color: #ffffff;
+            font-size: 1.55rem;
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+
+        /* Hide dashboard quick action buttons as per user mockup */
+        .st-key-dashboard_quick_actions,
+        .st-key-create_project,
+        .st-key-view_projects {
+            display: none !important;
+            height: 0 !important;
+            min-height: 0 !important;
+            max-height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
             border: none !important;
-            margin: 0;
-            padding: 0;
-            font-size: clamp(3.35rem, 5.6vw, 4.8rem);
-            line-height: 1.05;
-            font-weight: 800;
-            letter-spacing: 0;
-            color: transparent !important;
-            background:
-                linear-gradient(180deg, #ffffff 0%, #e0f2fe 18%, #7dd3fc 36%, #2563eb 58%, #bfdbfe 76%, #0b2d63 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            text-shadow:
-                0 1px 0 rgba(255, 255, 255, 0.95),
-                0 0 18px rgba(147, 197, 253, 0.8),
-                0 12px 28px rgba(37, 99, 235, 0.45),
-                0 2px 3px rgba(2, 6, 23, 0.64);
+            position: absolute !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            overflow: hidden !important;
+            opacity: 0 !important;
+        }
+
+        /* Recent Projects Section Header & Divider */
+        .dash-section-header {
+            font-size: 1.45rem;
+            font-weight: 400;
+            color: #ffffff;
+            margin: 2.2rem 0 0.4rem 0;
+            letter-spacing: 0.3px;
+        }
+
+        .dash-section-divider {
+            width: 100%;
+            height: 1.5px;
+            background: rgba(255, 255, 255, 0.85);
+            margin: 0.4rem 0 1.8rem 0;
+        }
+
+        /* 5. Typography Across All Pages */
+        h1, h2, h3, h4, h5, h6 {
+            color: #ffffff !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+            font-weight: 500 !important;
+        }
+
+        h1 {
+            font-size: 1.85rem !important;
+            border-bottom: 1.5px solid rgba(255, 255, 255, 0.85) !important;
+            padding-bottom: 0.75rem !important;
+            margin-bottom: 1.5rem !important;
+        }
+
+        p, span, div, li, label {
+            color: #cbd5e1 !important;
+        }
+
+        strong, b {
+            color: #ffffff !important;
+        }
+
+        /* 6. Form Inputs & Textareas (Pills & Chalk Containers) */
+        .stTextInput > div > div > input,
+        .stPasswordInput > div > div > input {
+            background: rgba(30, 30, 40, 0.75) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.8) !important;
+            border-radius: 9999px !important;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            padding: 0.75rem 1.4rem !important;
+            font-size: 0.95rem !important;
+            box-shadow: none !important;
+        }
+
+        .stTextInput > div > div > input:focus,
+        .stPasswordInput > div > div > input:focus {
+            border-color: #ffffff !important;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.4) !important;
+        }
+
+        .stTextArea > div > div > textarea {
+            background: rgba(30, 30, 40, 0.75) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.8) !important;
+            border-radius: 18px !important;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            padding: 1rem 1.25rem !important;
+            font-size: 0.95rem !important;
+            box-shadow: none !important;
+        }
+
+        .stTextArea > div > div > textarea:focus {
+            border-color: #ffffff !important;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.4) !important;
+        }
+
+        .stSelectbox > div > div {
+            background: rgba(30, 30, 40, 0.75) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.8) !important;
+            border-radius: 9999px !important;
+            color: #ffffff !important;
+        }
+
+        /* 7. Buttons Across Entire Application (Pill Shape) */
+        .stButton > button {
+            border: 1.5px solid rgba(255, 255, 255, 0.85) !important;
+            border-radius: 9999px !important;
+            background: rgba(55, 55, 68, 0.8) !important;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            padding: 0.65rem 1.4rem !important;
+            font-weight: 500 !important;
+            font-size: 0.95rem !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .stButton > button:hover {
+            background: #ffffff !important;
+            color: #0b0b0f !important;
+            -webkit-text-fill-color: #0b0b0f !important;
+            box-shadow: 0 0 16px rgba(255, 255, 255, 0.5) !important;
+            transform: translateY(-1px) !important;
+        }
+
+        /* 8. Cards Across All Pages */
+        .card, .project-card {
+            background: rgba(24, 24, 32, 0.75) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+            border-radius: 20px !important;
+            padding: 1.5rem !important;
+            margin-bottom: 1.25rem !important;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5) !important;
+            backdrop-filter: blur(10px) !important;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            box-sizing: border-box !important;
+            max-width: 100% !important;
+            overflow-wrap: break-word !important;
+            word-wrap: break-word !important;
+            word-break: break-word !important;
+        }
+
+        .card *, .project-card * {
+            box-sizing: border-box !important;
+            overflow-wrap: break-word !important;
+            word-wrap: break-word !important;
+            word-break: break-word !important;
+        }
+
+        .card:hover, .project-card:hover {
+            border-color: rgba(255, 255, 255, 0.6) !important;
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.6) !important;
+        }
+
+        .card h3, .card h4, .project-card h3, .project-card h4 {
+            color: #ffffff !important;
+        }
+
+        /* 9. Metric Pill Badges */
+        .metric-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.12) !important;
+            border: 1px solid rgba(255, 255, 255, 0.5) !important;
+            color: #ffffff !important;
+            padding: 0.25rem 0.85rem !important;
+            border-radius: 9999px !important;
+            font-size: 0.8rem !important;
+            font-weight: 500 !important;
+            margin-right: 0.5rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+
+        /* 10. Message Alert Banners */
+        .info-box {
+            background: rgba(25, 35, 50, 0.75) !important;
+            border: 1.5px solid rgba(56, 189, 248, 0.6) !important;
+            border-radius: 16px !important;
+            padding: 1rem 1.25rem !important;
+            color: #e0f2fe !important;
+            margin-bottom: 1.25rem !important;
+            backdrop-filter: blur(10px) !important;
+        }
+        .info-box strong { color: #38bdf8 !important; }
+
+        .success-box {
+            background: rgba(18, 42, 28, 0.75) !important;
+            border: 1.5px solid rgba(74, 222, 128, 0.6) !important;
+            border-radius: 16px !important;
+            padding: 1rem 1.25rem !important;
+            color: #dcfce7 !important;
+            margin-bottom: 1.25rem !important;
+            backdrop-filter: blur(10px) !important;
+        }
+        .success-box strong { color: #4ade80 !important; }
+
+        .warning-box {
+            background: rgba(45, 30, 18, 0.75) !important;
+            border: 1.5px solid rgba(251, 146, 60, 0.6) !important;
+            border-radius: 16px !important;
+            padding: 1rem 1.25rem !important;
+            color: #ffedd5 !important;
+            margin-bottom: 1.25rem !important;
+            backdrop-filter: blur(10px) !important;
+        }
+        .warning-box strong { color: #fb923c !important; }
+
+        /* 11. Tabs Styling - Floating Pill Capsules / Bubbles matching mockup */
+        div[data-testid="stTabs"],
+        .stTabs {
+            background: transparent !important;
+            margin-top: 0.5rem !important;
+            margin-bottom: 1.5rem !important;
+        }
+
+        /* Tab list container */
+        div[data-testid="stTabs"] [role="tablist"],
+        div[data-testid="stTabs"] [data-baseweb="tab-list"],
+        [data-baseweb="tab-list"],
+        [role="tablist"] {
+            background: transparent !important;
+            border-bottom: none !important;
+            border: none !important;
+            gap: 1.25rem !important;
+            padding: 0.5rem 0 1.25rem 0 !important;
+            margin-bottom: 1rem !important;
+            display: flex !important;
+            flex-wrap: wrap !important;
+            align-items: center !important;
+            overflow: visible !important;
+            overflow-y: visible !important;
+        }
+
+        /* Remove underline bar in React-Aria & BaseWeb */
+        div[data-testid="stTabs"] [role="tablist"]::after,
+        div[data-testid="stTabs"] div[role="tablist"]::after,
+        div[data-testid="stTabs"] > div > div::after,
+        .stTabs [role="tablist"]::after,
+        [role="tablist"]::after {
+            display: none !important;
+            content: none !important;
+            background: transparent !important;
+            height: 0 !important;
+            border: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+
+        /* Remove selection indicator (red underline) */
+        div[data-testid="stTabs"] .react-aria-SelectionIndicator,
+        .react-aria-SelectionIndicator,
+        div[data-testid="stTabs"] [data-baseweb="tab-highlight"],
+        div[data-testid="stTabs"] [data-baseweb="tab-border"],
+        [data-baseweb="tab-highlight"],
+        [data-baseweb="tab-border"] {
+            display: none !important;
+            height: 0 !important;
+            width: 0 !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            border: none !important;
+            background: transparent !important;
+            pointer-events: none !important;
+        }
+
+        /* Individual Tab Capsule Bubble (React-Aria & BaseWeb) */
+        div[data-testid="stTabs"] [data-testid="stTab"],
+        div[data-testid="stTabs"] [role="tab"],
+        div[data-testid="stTabs"] button[role="tab"],
+        .stTabs [data-testid="stTab"],
+        .stTabs [role="tab"],
+        [data-testid="stTab"],
+        div[data-testid="stTabs"] [data-baseweb="tab"],
+        [data-baseweb="tab"] {
+            border: 1.5px solid rgba(255, 255, 255, 0.85) !important;
+            border-bottom: 1.5px solid rgba(255, 255, 255, 0.85) !important;
+            border-radius: 9999px !important;
+            background: rgba(65, 65, 75, 0.85) !important;
+            padding: 0.65rem 1.6rem !important;
+            margin: 0 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            cursor: pointer !important;
+            outline: none !important;
+            height: auto !important;
+            min-height: 42px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-decoration: none !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Typography inside tab capsule bubble */
+        div[data-testid="stTabs"] [data-testid="stTab"] *,
+        div[data-testid="stTabs"] [role="tab"] *,
+        .stTabs [data-testid="stTab"] *,
+        .stTabs [role="tab"] *,
+        [data-testid="stTab"] *,
+        div[data-testid="stTabs"] [data-baseweb="tab"] *,
+        [data-baseweb="tab"] * {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            font-size: 0.95rem !important;
+            font-weight: 500 !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+            line-height: 1.2 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            text-decoration: none !important;
+        }
+
+        /* Hover state for inactive bubbles */
+        div[data-testid="stTabs"] [data-testid="stTab"]:hover:not([data-selected]),
+        div[data-testid="stTabs"] [data-testid="stTab"]:hover:not([aria-selected="true"]),
+        div[data-testid="stTabs"] [role="tab"]:hover:not([data-selected]),
+        div[data-testid="stTabs"] [role="tab"]:hover:not([aria-selected="true"]),
+        .stTabs [data-testid="stTab"]:hover:not([data-selected]),
+        .stTabs [role="tab"]:hover:not([data-selected]),
+        div[data-testid="stTabs"] [data-baseweb="tab"]:hover:not([aria-selected="true"]) {
+            background: rgba(255, 255, 255, 0.2) !important;
+            border-color: #ffffff !important;
+            border-bottom-color: #ffffff !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45) !important;
+        }
+
+        /* Selected / Active Tab Capsule Bubble */
+        div[data-testid="stTabs"] [data-testid="stTab"][data-selected],
+        div[data-testid="stTabs"] [data-testid="stTab"][aria-selected="true"],
+        div[data-testid="stTabs"] [role="tab"][data-selected],
+        div[data-testid="stTabs"] [role="tab"][aria-selected="true"],
+        .stTabs [data-testid="stTab"][data-selected],
+        .stTabs [data-testid="stTab"][aria-selected="true"],
+        .stTabs [role="tab"][data-selected],
+        .stTabs [role="tab"][aria-selected="true"],
+        div[data-testid="stTabs"] [data-baseweb="tab"][aria-selected="true"] {
+            background: #ffffff !important;
+            border: 1.5px solid #ffffff !important;
+            border-bottom: 1.5px solid #ffffff !important;
+            border-radius: 9999px !important;
+            box-shadow: 0 0 16px rgba(255, 255, 255, 0.45) !important;
+            transform: translateY(-1px) !important;
+        }
+
+        div[data-testid="stTabs"] [data-testid="stTab"][data-selected] *,
+        div[data-testid="stTabs"] [data-testid="stTab"][aria-selected="true"] *,
+        div[data-testid="stTabs"] [role="tab"][data-selected] *,
+        div[data-testid="stTabs"] [role="tab"][aria-selected="true"] *,
+        .stTabs [data-testid="stTab"][data-selected] *,
+        .stTabs [data-testid="stTab"][aria-selected="true"] *,
+        .stTabs [role="tab"][data-selected] *,
+        .stTabs [role="tab"][aria-selected="true"] *,
+        div[data-testid="stTabs"] [data-baseweb="tab"][aria-selected="true"] * {
+            color: #0b0b0f !important;
+            -webkit-text-fill-color: #0b0b0f !important;
+            font-weight: 600 !important;
+        }
+
+        /* Focus state */
+        div[data-testid="stTabs"] [data-testid="stTab"]:focus,
+        div[data-testid="stTabs"] [role="tab"]:focus,
+        div[data-testid="stTabs"] [data-baseweb="tab"]:focus {
+            outline: none !important;
+        }
+
+        div[data-testid="stTabContent"] {
+            padding-top: 0.75rem !important;
+        }
+
+        /* 12. Progress Bar */
+        .stProgress > div > div > div > div {
+            background: linear-gradient(90deg, #38bdf8 0%, #ffffff 100%) !important;
+            border-radius: 9999px !important;
         }
     </style>
     """, unsafe_allow_html=True)
@@ -452,300 +765,810 @@ def get_asset_data_uri(relative_path):
     return f"data:image/png;base64,{encoded}"
 
 def apply_login_background():
-    """Apply the animated background only on the start/login page."""
-    background_uri = get_asset_data_uri("assets/login-background.png")
-    if not background_uri:
-        return
+    """Apply immersive chalkboard theme matching PROJECT NOVELTY ANALYSER artwork with intact expansive flowing lights and extra demo section."""
+    uri_bulbs = get_asset_data_uri("assets/chalk_bulbs_transparent.png")
 
-    st.markdown(f"""
+    css = f"""
     <style>
-        [data-testid="stAppViewContainer"] {{
-            background: #020617;
-        }}
-
-        [data-testid="stAppViewContainer"]::before {{
-            content: "";
-            position: fixed;
-            inset: -4%;
-            z-index: 0;
-            background-image:
-                linear-gradient(90deg, rgba(2, 6, 23, 0.24), rgba(14, 116, 144, 0.02), rgba(2, 6, 23, 0.34)),
-                url("{background_uri}");
-            background-size: cover;
-            background-position: center;
-            opacity: 1;
-            transform: translate3d(0, 0, 0) scale(1.04);
-            animation: loginBackgroundDrift 12s ease-in-out infinite alternate;
-            will-change: transform, background-position;
-        }}
-
-        [data-testid="stAppViewContainer"]::after {{
-            content: "";
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background:
-                radial-gradient(circle at 47% 25%, rgba(186, 230, 253, 0.3), transparent 31%),
-                radial-gradient(circle at 50% 72%, rgba(59, 130, 246, 0.18), transparent 38%),
-                linear-gradient(180deg, rgba(2, 6, 23, 0.05), rgba(2, 6, 23, 0.46));
-            pointer-events: none;
+        /* 1. Immersive Full-Screen Blackboard Stage */
+        html, body, [data-testid="stAppViewContainer"], .main {{
+            width: 100vw !important;
+            min-height: 100vh !important;
+            height: auto !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background-color: #0b0b0f !important;
+            background: radial-gradient(circle at 75% 45%, #15151c 0%, #0b0b0f 75%) !important;
         }}
 
         [data-testid="stHeader"],
-        [data-testid="stSidebar"] {{
-            background: transparent;
+        [data-testid="stSidebar"],
+        footer {{
+            display: none !important;
         }}
 
         .main .block-container {{
-            position: relative;
-            z-index: 1;
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-            max-width: 780px;
+            max-width: 100vw !important;
+            width: 100vw !important;
+            min-height: 100vh !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            position: relative !important;
         }}
 
-        .login-content {{
-            min-height: calc(100vh - 4rem);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: min(100%, 720px);
-            margin: 0 auto;
+        /* Completely suppress Streamlit's "Press Enter to submit form" tooltip */
+        [data-testid="InputInstructions"],
+        .stInputInstructions,
+        div[class*="InputInstructions"],
+        div:has(> [data-testid="InputInstructions"]),
+        div:has(> .stInputInstructions) {{
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            max-height: 0 !important;
+            width: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            overflow: hidden !important;
         }}
 
-        [data-testid="stForm"] {{
-            position: relative;
-            overflow: hidden;
-            background:
-                linear-gradient(145deg, rgba(255, 255, 255, 0.36), rgba(191, 219, 254, 0.18) 52%, rgba(59, 130, 246, 0.16));
-            border: 1px solid rgba(226, 244, 255, 0.9);
-            border-radius: 8px;
-            padding: 1.6rem;
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.95),
-                inset 0 -1px 0 rgba(147, 197, 253, 0.32),
-                0 22px 65px rgba(2, 6, 23, 0.42),
-                0 0 32px rgba(96, 165, 250, 0.36),
-                0 0 0 1px rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(28px) saturate(190%) brightness(1.16);
-            -webkit-backdrop-filter: blur(28px) saturate(190%) brightness(1.16);
+        /* 1b. Expansive Floating Chalk Bulbs Stage at Top Left */
+        .chalk-bulbs-flow-stage {{
+            position: absolute !important;
+            left: 24vw !important;
+            top: 2rem !important;
+            transform: translateX(-50%) !important;
+            width: min(45vw, 540px) !important;
+            max-width: 540px !important;
+            height: auto !important;
+            pointer-events: none !important;
+            z-index: 1 !important;
         }}
 
-        [data-testid="stForm"]::before {{
-            content: "";
-            position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(115deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 255, 255, 0.2) 24%, transparent 45%),
-                linear-gradient(290deg, transparent 58%, rgba(125, 211, 252, 0.28) 100%);
-            pointer-events: none;
+        .chalk-bulbs-art-intact {{
+            width: 100% !important;
+            height: auto !important;
+            display: block !important;
+            will-change: transform, filter !important;
+            animation: chalkArtworkGentleBreathe 6.5s ease-in-out infinite !important;
+            transform-origin: 50% 25% !important;
+            filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.35))
+                    drop-shadow(0 0 60px rgba(255, 235, 170, 0.18))
+                    drop-shadow(0 25px 45px rgba(0, 0, 0, 0.85)) !important;
+            pointer-events: none !important;
         }}
 
-        [data-testid="stForm"] > * {{
-            position: relative;
-            z-index: 1;
-        }}
-
-        [data-testid="stForm"] label,
-        [data-testid="stForm"] p,
-        [data-testid="stForm"] span {{
-            color: #0f172a !important;
-            font-weight: 650;
-        }}
-
-        [data-testid="stForm"] small {{
-            color: #334155 !important;
-        }}
-
-        [data-testid="stForm"] input {{
-            background: rgba(255, 255, 255, 0.76) !important;
-            color: #0f172a !important;
-            border: 1px solid rgba(219, 234, 254, 0.95) !important;
-            box-shadow:
-                inset 0 1px 3px rgba(15, 23, 42, 0.12),
-                0 1px 0 rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }}
-
-        [data-testid="stForm"] input:focus {{
-            border-color: #3b82f6 !important;
-            box-shadow:
-                0 0 0 3px rgba(59, 130, 246, 0.24),
-                inset 0 1px 3px rgba(15, 23, 42, 0.08) !important;
-        }}
-
-        [data-testid="stForm"] .stButton > button {{
-            background: linear-gradient(135deg, #dbeafe 0%, #60a5fa 18%, #2563eb 52%, #0b3a92 100%);
-            border: 1px solid rgba(239, 246, 255, 0.9);
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.74),
-                inset 0 -1px 0 rgba(15, 23, 42, 0.16),
-                0 10px 28px rgba(37, 99, 235, 0.45),
-                0 0 18px rgba(125, 211, 252, 0.32);
-        }}
-
-        [data-testid="stForm"] .stButton > button:hover {{
-            background: linear-gradient(135deg, #93c5fd 0%, #2563eb 44%, #082f79 100%);
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.38),
-                0 14px 30px rgba(37, 99, 235, 0.45);
-            transform: translateY(-1px);
-        }}
-
-        .login-glass-panel {{
-            position: relative;
-            overflow: hidden;
-            background:
-                linear-gradient(145deg, rgba(255, 255, 255, 0.36), rgba(191, 219, 254, 0.18) 55%, rgba(59, 130, 246, 0.14));
-            border: 1px solid rgba(226, 244, 255, 0.88);
-            border-radius: 8px;
-            padding: 1.15rem 1.25rem;
-            margin-top: 1.25rem;
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.92),
-                0 18px 50px rgba(2, 6, 23, 0.34),
-                0 0 28px rgba(96, 165, 250, 0.28),
-                0 0 0 1px rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(26px) saturate(185%) brightness(1.16);
-            -webkit-backdrop-filter: blur(26px) saturate(185%) brightness(1.16);
-        }}
-
-        .login-glass-panel::before {{
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(110deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.18) 30%, transparent 48%, rgba(147, 197, 253, 0.22) 76%, transparent);
-            pointer-events: none;
-        }}
-
-        .login-glass-panel > * {{
-            position: relative;
-            z-index: 1;
-        }}
-
-        .login-demo-title {{
-            margin: 0;
-            color: #0f3c96 !important;
-            font-weight: 800;
-            font-size: 1rem;
-        }}
-
-        .login-demo-copy {{
-            margin: 0.55rem 0 0 0;
-            color: #0f172a !important;
-            font-size: 0.92rem;
-            line-height: 1.55;
-        }}
-
-        .login-hero-panel {{
-            padding: 1.75rem 1.5rem 1.2rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(226, 244, 255, 0.34);
-            border-radius: 8px;
-            background:
-                linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(147, 197, 253, 0.08) 50%, rgba(2, 6, 23, 0.1));
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.34),
-                0 24px 80px rgba(2, 6, 23, 0.24),
-                0 0 34px rgba(96, 165, 250, 0.2);
-            backdrop-filter: blur(14px) saturate(165%);
-            -webkit-backdrop-filter: blur(14px) saturate(165%);
-        }}
-
-        .login-subtitle {{
-            color: #eff6ff !important;
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-top: 0.85rem;
-            text-shadow:
-                0 0 12px rgba(147, 197, 253, 0.65),
-                0 2px 8px rgba(2, 6, 23, 0.7);
-        }}
-
-        .login-heading {{
-            color: #f8fbff !important;
-            font-size: 2.25rem;
-            font-weight: 800;
-            margin-bottom: 0.75rem;
-            text-shadow:
-                0 0 14px rgba(147, 197, 253, 0.7),
-                0 3px 12px rgba(2, 6, 23, 0.8);
-        }}
-
-        @keyframes loginBackgroundDrift {{
-            0% {{
-                transform: translate3d(-18px, -4px, 0) scale(1.05);
-                background-position: 47% 50%;
+        @keyframes chalkArtworkGentleBreathe {{
+            0%, 100% {{
+                transform: translateY(0px) scale(1);
             }}
             50% {{
-                transform: translate3d(16px, 5px, 0) scale(1.07);
-                background-position: 53% 49%;
-            }}
-            100% {{
-                transform: translate3d(30px, -2px, 0) scale(1.05);
-                background-position: 56% 51%;
+                transform: translateY(-8px) scale(1.008);
             }}
         }}
 
-        @media (max-width: 720px) {{
-            .main .block-container {{
-                padding-top: 1rem;
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }}
+        /* Independent Flowing Light Luminescence Cores for the Bulbs */
+        .bulb-glow-core {{
+            position: absolute !important;
+            border-radius: 50% !important;
+            pointer-events: none !important;
+            mix-blend-mode: screen !important;
+            transform: translate(-50%, -50%) !important;
+            will-change: transform, opacity !important;
+        }}
 
-            .login-content {{
-                min-height: auto;
-                justify-content: flex-start;
-                padding-top: 1rem;
+        /* Bulb 1 Glow: Upper Left (x: 11.5%, y: 13.5%) */
+        .glow-bulb-1 {{
+            left: 11.5% !important;
+            top: 13.5% !important;
+            width: 22% !important;
+            height: 10% !important;
+            background: radial-gradient(circle, rgba(255, 245, 210, 0.6) 0%, rgba(255, 215, 130, 0.25) 45%, transparent 75%) !important;
+            animation: pulseGlow1 4.6s ease-in-out infinite -1.2s !important;
+        }}
+
+        /* Bulb 2 Glow: Lower Left (x: 16.5%, y: 30.7%) */
+        .glow-bulb-2 {{
+            left: 16.5% !important;
+            top: 30.7% !important;
+            width: 20% !important;
+            height: 9% !important;
+            background: radial-gradient(circle, rgba(255, 240, 200, 0.55) 0%, rgba(255, 210, 120, 0.22) 45%, transparent 75%) !important;
+            animation: pulseGlow2 4.0s ease-in-out infinite -2.6s !important;
+        }}
+
+        /* Bulb 3 Glow: Grand Hero Center (x: 46.5%, y: 15.1%) */
+        .glow-bulb-3 {{
+            left: 46.5% !important;
+            top: 15.1% !important;
+            width: 44% !important;
+            height: 19% !important;
+            background: radial-gradient(circle, rgba(255, 255, 235, 0.7) 0%, rgba(255, 230, 150, 0.38) 40%, rgba(255, 190, 80, 0.16) 65%, transparent 85%) !important;
+            animation: pulseGlow3 6.0s ease-in-out infinite 0s !important;
+        }}
+
+        /* Bulb 4 Glow: Lower Center (x: 60.0%, y: 34.3%) */
+        .glow-bulb-4 {{
+            left: 60.0% !important;
+            top: 34.3% !important;
+            width: 16% !important;
+            height: 8% !important;
+            background: radial-gradient(circle, rgba(255, 245, 210, 0.65) 0%, rgba(255, 220, 130, 0.28) 45%, transparent 75%) !important;
+            animation: pulseGlow4 3.4s ease-in-out infinite -1.9s !important;
+        }}
+
+        /* Bulb 5 Glow: Right Bulb (x: 84.5%, y: 22.9%) */
+        .glow-bulb-5 {{
+            left: 84.5% !important;
+            top: 22.9% !important;
+            width: 26% !important;
+            height: 12% !important;
+            background: radial-gradient(circle, rgba(255, 245, 210, 0.6) 0%, rgba(255, 215, 130, 0.25) 45%, transparent 75%) !important;
+            animation: pulseGlow5 5.2s ease-in-out infinite -3.3s !important;
+        }}
+
+        @keyframes pulseGlow1 {{
+            0%, 100% {{ transform: translate(-50%, -50%) scale(0.92); opacity: 0.65; }}
+            50% {{ transform: translate(-50%, -50%) scale(1.14); opacity: 0.95; }}
+        }}
+        @keyframes pulseGlow2 {{
+            0%, 100% {{ transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }}
+            50% {{ transform: translate(-50%, -50%) scale(1.16); opacity: 0.92; }}
+        }}
+        @keyframes pulseGlow3 {{
+            0%, 100% {{ transform: translate(-50%, -50%) scale(0.94); opacity: 0.75; }}
+            50% {{ transform: translate(-50%, -50%) scale(1.12); opacity: 1.0; }}
+        }}
+        @keyframes pulseGlow4 {{
+            0%, 100% {{ transform: translate(-50%, -50%) scale(0.88); opacity: 0.55; }}
+            50% {{ transform: translate(-50%, -50%) scale(1.2); opacity: 0.95; }}
+        }}
+        @keyframes pulseGlow5 {{
+            0%, 100% {{ transform: translate(-50%, -50%) scale(0.92); opacity: 0.65; }}
+            50% {{ transform: translate(-50%, -50%) scale(1.14); opacity: 0.95; }}
+        }}
+
+        /* Ambient floating light sparks / embers */
+        .chalk-light-spark {{
+            position: absolute !important;
+            border-radius: 50% !important;
+            background: radial-gradient(circle, rgba(255, 255, 240, 0.95) 0%, rgba(255, 230, 160, 0.5) 60%, transparent 100%) !important;
+            filter: blur(0.5px) !important;
+            box-shadow: 0 0 10px rgba(255, 230, 160, 0.8) !important;
+            pointer-events: none !important;
+        }}
+
+        .spark-1 {{
+            width: 6px; height: 6px;
+            left: 18%; top: 32%;
+            animation: sparkRise1 4.5s ease-in-out infinite -0.8s !important;
+        }}
+        .spark-2 {{
+            width: 7px; height: 7px;
+            left: 48%; top: 22%;
+            animation: sparkRise2 5.5s ease-in-out infinite -2.3s !important;
+        }}
+        .spark-3 {{
+            width: 5px; height: 5px;
+            left: 78%; top: 35%;
+            animation: sparkRise3 4.8s ease-in-out infinite -1.5s !important;
+        }}
+        .spark-4 {{
+            width: 6px; height: 6px;
+            left: 32%; top: 48%;
+            animation: sparkRise1 5.2s ease-in-out infinite -3.2s !important;
+        }}
+        .spark-5 {{
+            width: 5px; height: 5px;
+            left: 58%; top: 44%;
+            animation: sparkRise2 4.2s ease-in-out infinite -0.4s !important;
+        }}
+
+        @keyframes sparkRise1 {{
+            0% {{ transform: translate(0, 0) scale(0.6); opacity: 0; }}
+            25% {{ opacity: 0.85; }}
+            75% {{ opacity: 0.75; }}
+            100% {{ transform: translate(18px, -95px) scale(1.1); opacity: 0; }}
+        }}
+        @keyframes sparkRise2 {{
+            0% {{ transform: translate(0, 0) scale(0.7); opacity: 0; }}
+            30% {{ opacity: 0.9; }}
+            70% {{ opacity: 0.7; }}
+            100% {{ transform: translate(-22px, -115px) scale(0.5); opacity: 0; }}
+        }}
+        @keyframes sparkRise3 {{
+            0% {{ transform: translate(0, 0) scale(0.5); opacity: 0; }}
+            40% {{ opacity: 0.95; }}
+            80% {{ opacity: 0.65; }}
+            100% {{ transform: translate(14px, -90px) scale(1); opacity: 0; }}
+        }}
+
+        /* 2. THE HERO LOGIN FORM (Right side on desktop, centered on mobile) */
+        [data-testid="stForm"] {{
+            width: 100vw !important;
+            min-height: 100vh !important;
+            max-width: 100vw !important;
+            margin: 0 !important;
+            padding: 2.5rem 2rem 2.5rem 50vw !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            background: transparent !important;
+            box-sizing: border-box !important;
+            position: relative !important;
+            z-index: 5 !important;
+        }}
+
+        /* Neutralize internal Streamlit form wrappers */
+        [data-testid="stForm"] > div:first-child {{
+            width: min(500px, 94vw) !important;
+            margin: 0 auto !important;
+            padding: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+        }}
+
+        /* 3. Title: PROJECT NOVELTY [ ANALYSER ] matching User Reference Image (Enlarged) */
+        .login-brand-title {{
+            width: 100% !important;
+            max-width: 680px !important;
+            margin: 0 auto 2.2rem auto !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }}
+
+        .login-brand-hero-img {{
+            width: min(650px, 95vw) !important;
+            max-width: 100% !important;
+            height: auto !important;
+            display: block !important;
+            margin: 0 auto !important;
+            filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.7)) !important;
+            user-select: none !important;
+            pointer-events: none !important;
+        }}
+
+        /* 4. Action: LOGIN Submit Button (Positioned DOWN below Card) */
+        [data-testid="stForm"] [data-testid="stFormSubmitButton"] {{
+            width: min(420px, 92vw) !important;
+            margin: 1.4rem auto 0 auto !important;
+            padding: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }}
+
+        [data-testid="stForm"] [data-testid="stFormSubmitButton"] > button {{
+            width: 100% !important;
+            height: 54px !important;
+            min-height: 54px !important;
+            max-height: 54px !important;
+            background: rgba(45, 45, 55, 0.85) !important;
+            background-color: rgba(45, 45, 55, 0.85) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.9) !important;
+            border-radius: 9999px !important;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+            font-size: 1.05rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 5px !important;
+            text-transform: uppercase !important;
+            cursor: pointer !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 0 !important;
+        }}
+
+        [data-testid="stForm"] [data-testid="stFormSubmitButton"] > button:hover {{
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            color: #0b0b0f !important;
+            -webkit-text-fill-color: #0b0b0f !important;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 24px rgba(255, 255, 255, 0.7), 0 6px 20px rgba(0, 0, 0, 0.6) !important;
+            transform: translateY(-2px) !important;
+        }}
+
+        [data-testid="stForm"] [data-testid="stFormSubmitButton"] > button:active {{
+            transform: translateY(1px) scale(0.99) !important;
+        }}
+
+        [data-testid="stForm"] [data-testid="stFormSubmitButton"] p {{
+            margin: 0 !important;
+            padding: 0 !important;
+            color: inherit !important;
+            -webkit-text-fill-color: inherit !important;
+            font-family: inherit !important;
+            font-size: inherit !important;
+            font-weight: inherit !important;
+            letter-spacing: inherit !important;
+        }}
+
+        /* 5. The Chalk Card Container (Containing ONLY USERNAME & PASSWORD) */
+        [data-testid="stForm"] [data-testid="stVerticalBlockBorderWrapper"] {{
+            width: min(420px, 92vw) !important;
+            border: 2px solid rgba(255, 255, 255, 0.95) !important;
+            border-radius: 36px !important;
+            background: rgba(22, 22, 28, 0.75) !important;
+            backdrop-filter: blur(16px) !important;
+            padding: 28px 24px 28px 24px !important;
+            margin: 0 auto !important;
+            box-shadow: 0 10px 32px rgba(0, 0, 0, 0.65), inset 0 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+            box-sizing: border-box !important;
+        }}
+
+        [data-testid="stForm"] [data-testid="stVerticalBlockBorderWrapper"] > div {{
+            border: none !important;
+            background: transparent !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 18px !important;
+            padding: 0 !important;
+        }}
+
+        /* 6. Pill Inputs (USERNAME and PASSWORD) */
+        [data-testid="stForm"] [data-testid="stTextInput"] {{
+            width: 100% !important;
+            height: 56px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: transparent !important;
+            border: none !important;
+        }}
+
+        [data-testid="stForm"] [data-testid="stTextInput"] label {{
+            display: none !important;
+        }}
+
+        [data-testid="stForm"] [data-testid="stTextInput"] > div {{
+            border: none !important;
+            background: transparent !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+        }}
+
+        [data-testid="stForm"] [data-testid="stTextInputRootElement"] {{
+            width: 100% !important;
+            height: 56px !important;
+            min-height: 56px !important;
+            max-height: 56px !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.9) !important;
+            border-radius: 9999px !important;
+            background: rgba(60, 60, 68, 0.85) !important;
+            padding: 0 1.6rem !important;
+            box-sizing: border-box !important;
+            box-shadow: none !important;
+            outline: none !important;
+            transition: all 0.2s ease !important;
+            display: flex !important;
+            align-items: center !important;
+        }}
+
+        [data-testid="stForm"] [data-testid="stTextInputRootElement"]:focus-within {{
+            border-color: #ffffff !important;
+            box-shadow: 0 0 16px rgba(255, 255, 255, 0.45) !important;
+            background: rgba(72, 72, 82, 0.9) !important;
+        }}
+
+        [data-testid="stForm"] [data-testid="stTextInput"] input {{
+            width: 100% !important;
+            height: 100% !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            font-size: 0.98rem !important;
+            font-weight: 400 !important;
+            letter-spacing: 1.5px !important;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+        }}
+
+        [data-testid="stForm"] [data-testid="stTextInput"] input::placeholder {{
+            color: rgba(255, 255, 255, 0.75) !important;
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.75) !important;
+            opacity: 1 !important;
+            font-size: 0.95rem !important;
+            letter-spacing: 2.5px !important;
+            text-transform: uppercase !important;
+            font-weight: 300 !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        }}
+
+        [data-testid="stForm"] [data-testid="stTextInput"] button {{
+            background: transparent !important;
+            border: none !important;
+            color: rgba(255, 255, 255, 0.55) !important;
+            padding-right: 0.5rem !important;
+            box-shadow: none !important;
+        }}
+
+        [data-testid="stForm"] [data-testid="stTextInput"] button:hover {{
+            color: #ffffff !important;
+        }}
+
+        /* 7. Error Alert */
+        [data-testid="stForm"] div[data-testid="stAlert"] {{
+            width: min(390px, 92vw) !important;
+            margin: 1.25rem auto 0 auto !important;
+            background: rgba(185, 28, 28, 0.92) !important;
+            color: #ffffff !important;
+            font-size: 0.82rem !important;
+            padding: 0.45rem 1rem !important;
+            border-radius: 9999px !important;
+            border: 1px solid rgba(254, 202, 202, 0.5) !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6) !important;
+            text-align: center !important;
+            backdrop-filter: blur(8px) !important;
+        }}
+
+        [data-testid="stForm"] div[data-testid="stAlert"] [data-testid="stMarkdownContainer"] p {{
+            color: #ffffff !important;
+            font-size: 0.82rem !important;
+            line-height: 1.25 !important;
+            margin: 0 !important;
+            font-weight: 500 !important;
+        }}
+
+        [data-testid="stForm"] div[data-testid="stAlert"] svg {{
+            width: 14px !important;
+            height: 14px !important;
+            fill: #ffffff !important;
+        }}
+
+        /* 8. Extra Demo Section Down Below - Floating Chalkboard Experience (matching Image 2) */
+        /* 8. Demo Section - Two Column Split Layout (Brain on Left, Cards on Right) */
+        .demo-master-wrapper {{
+            width: min(1120px, 94vw) !important;
+            max-width: 1120px !important;
+            margin: 3rem auto 6rem auto !important;
+            padding: 0 !important;
+            position: relative !important;
+            z-index: 20 !important;
+            box-sizing: border-box !important;
+        }}
+
+        .demo-brain-stage {{
+            position: relative !important;
+            width: 100% !important;
+            max-width: 440px !important;
+            margin: 0 auto !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            pointer-events: none !important;
+        }}
+
+        .demo-brain-art {{
+            width: 100% !important;
+            height: auto !important;
+            display: block !important;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3)) drop-shadow(0 15px 35px rgba(0, 0, 0, 0.8)) !important;
+            animation: chalkArtworkGentleBreathe 6.5s ease-in-out infinite !important;
+        }}
+
+        /* Glowing Neural Synaptic Center inside brain */
+        .brain-synapse-core {{
+            position: absolute !important;
+            width: 44% !important;
+            height: 22% !important;
+            top: 80.7% !important;
+            left: 53.3% !important;
+            transform: translate(-50%, -50%) !important;
+            border-radius: 50% !important;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.5) 0%, rgba(255, 255, 255, 0.25) 40%, transparent 70%) !important;
+            filter: blur(14px) !important;
+            mix-blend-mode: screen !important;
+            pointer-events: none !important;
+            animation: neuralPulse 4s ease-in-out infinite !important;
+        }}
+
+        @keyframes neuralPulse {{
+            0%, 100% {{ opacity: 0.55; transform: translate(-50%, -50%) scale(0.92); }}
+            50% {{ opacity: 0.95; transform: translate(-50%, -50%) scale(1.14); }}
+        }}
+
+        /* Synaptic sparks around the cerebral lobes */
+        .brain-spark {{
+            position: absolute !important;
+            border-radius: 50% !important;
+            background: radial-gradient(circle, #ffffff 0%, rgba(56, 189, 248, 0.75) 60%, transparent 100%) !important;
+            pointer-events: none !important;
+        }}
+
+        .spark-b1 {{
+            width: 6px; height: 6px;
+            left: 45%; top: 78%;
+            animation: sparkPulse1 3.2s ease-in-out infinite -0.6s !important;
+        }}
+        .spark-b2 {{
+            width: 7px; height: 7px;
+            left: 60%; top: 83%;
+            animation: sparkPulse2 4.1s ease-in-out infinite -1.9s !important;
+        }}
+        .spark-b3 {{
+            width: 5px; height: 5px;
+            left: 52%; top: 85%;
+            animation: sparkPulse1 3.7s ease-in-out infinite -2.4s !important;
+        }}
+
+        @keyframes sparkPulse1 {{
+            0%, 100% {{ opacity: 0.2; transform: scale(0.7); }}
+            50% {{ opacity: 1; transform: scale(1.3); }}
+        }}
+        @keyframes sparkPulse2 {{
+            0%, 100% {{ opacity: 0.3; transform: scale(0.8); }}
+            50% {{ opacity: 0.95; transform: scale(1.25); }}
+        }}
+
+        /* Demo Accounts Header Capsule */
+        .demo-capsule-header-wrapper {{
+            width: 100% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 auto 1.5rem auto !important;
+        }}
+
+        .demo-capsule-badge {{
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 10px 42px !important;
+            border: 2px solid rgba(255, 255, 255, 0.95) !important;
+            border-radius: 9999px !important;
+            background: rgba(30, 30, 38, 0.85) !important;
+            backdrop-filter: blur(16px) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 16px rgba(255, 255, 255, 0.15) !important;
+        }}
+
+        .demo-capsule-badge span {{
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+            font-size: 1.2rem !important;
+            font-weight: 500 !important;
+            color: #ffffff !important;
+            letter-spacing: 0.8px !important;
+        }}
+
+        .demo-student-container {{
+            width: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0.9rem !important;
+        }}
+
+        /* STUDENT 1 and STUDENT 2 Buttons - Authentic Pill Capsules */
+        .demo-master-wrapper .stButton > button {{
+            width: 100% !important;
+            height: 50px !important;
+            min-height: 50px !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.85) !important;
+            border-radius: 9999px !important;
+            background: rgba(45, 45, 55, 0.85) !important;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+            font-size: 0.95rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 2.5px !important;
+            text-transform: uppercase !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }}
+
+        .demo-master-wrapper .stButton > button:hover {{
+            background: #ffffff !important;
+            color: #0b0b0f !important;
+            -webkit-text-fill-color: #0b0b0f !important;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 22px rgba(255, 255, 255, 0.7), 0 6px 20px rgba(0, 0, 0, 0.6) !important;
+            transform: translateY(-2px) !important;
+        }}
+
+        @media (max-width: 920px) {{
+            .chalk-bulbs-flow-stage {{
+                opacity: 0.12 !important;
             }}
+            [data-testid="stForm"] {{
+                padding: 3.5rem 1.5rem 2.5rem 1.5rem !important;
+            }}
+            .demo-master-wrapper {{
+                width: 92vw !important;
+                margin: 2.5rem auto 4rem auto !important;
+            }}
+        }}
+
+        /* Student Credential Pill Card (The "Better Version" Elegance) */
+        .student-credential-pill-card {{
+            background: rgba(22, 22, 30, 0.8) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+            border-radius: 20px !important;
+            padding: 1.15rem 1.35rem !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.05) !important;
+            backdrop-filter: blur(14px) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0.65rem !important;
+            box-sizing: border-box !important;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+        }}
+
+        .student-credential-pill-card:hover {{
+            border-color: rgba(255, 255, 255, 0.5) !important;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8), 0 0 16px rgba(255, 255, 255, 0.18) !important;
+        }}
+
+        .student-card-header {{
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+            padding-bottom: 0.45rem !important;
+            margin-bottom: 0.25rem !important;
+        }}
+
+        .student-name {{
+            font-size: 1.05rem !important;
+            font-weight: 600 !important;
+            color: #ffffff !important;
+            letter-spacing: 0.5px !important;
+        }}
+
+        .student-badge-role {{
+            font-size: 0.65rem !important;
+            font-weight: 700 !important;
+            color: #38bdf8 !important;
+            background: rgba(56, 189, 248, 0.15) !important;
+            border: 1px solid rgba(56, 189, 248, 0.35) !important;
+            padding: 2px 8px !important;
+            border-radius: 9999px !important;
+            letter-spacing: 0.8px !important;
+        }}
+
+        .student-credential-row {{
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 0.5rem !important;
+            font-size: 0.84rem !important;
+        }}
+
+        .cred-label {{
+            color: #94a3b8 !important;
+            font-size: 0.72rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 1px !important;
+        }}
+
+        .cred-val {{
+            color: #ffffff !important;
+            background: rgba(45, 45, 55, 0.9) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 6px !important;
+            padding: 2px 8px !important;
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace !important;
+            font-size: 0.82rem !important;
+            letter-spacing: 0.5px !important;
+        }}
+
+        .student-card-footer {{
+            margin-top: 0.25rem !important;
+            padding-top: 0.45rem !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+            color: #cbd5e1 !important;
+            font-size: 0.75rem !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.4rem !important;
+        }}
+
+        .student-card-footer .active-dot {{
+            color: #4ade80 !important;
+            font-size: 0.7rem !important;
         }}
     </style>
-    """, unsafe_allow_html=True)
+    """
+    stage_html = f"""
+    <div class="chalk-bulbs-flow-stage">
+        <!-- Floating luminous chalk sparks -->
+        <div class="chalk-light-spark spark-1"></div>
+        <div class="chalk-light-spark spark-2"></div>
+        <div class="chalk-light-spark spark-3"></div>
+        <div class="chalk-light-spark spark-4"></div>
+        <div class="chalk-light-spark spark-5"></div>
+        <!-- 5 Independent Flowing Light Luminescence Cores for the Bulbs -->
+        <div class="bulb-glow-core glow-bulb-1"></div>
+        <div class="bulb-glow-core glow-bulb-2"></div>
+        <div class="bulb-glow-core glow-bulb-3"></div>
+        <div class="bulb-glow-core glow-bulb-4"></div>
+        <div class="bulb-glow-core glow-bulb-5"></div>
+        <!-- Authentic Intact Chalk Lightbulbs -->
+        <img src="{uri_bulbs}" class="chalk-bulbs-art-intact" alt="Chalk Lightbulbs" />
+    </div>
+    """
+    st.markdown(css + stage_html, unsafe_allow_html=True)
 
 # ============================================================================
 # UI HELPER FUNCTIONS
 # ============================================================================
 
 def show_header(title, subtitle=""):
-    """Display a styled header."""
-    st.markdown(f"# {title}")
-    if subtitle:
-        st.markdown(f"<p style='color: #1e293b; font-size: 1.1rem;'>{subtitle}</p>", 
-                   unsafe_allow_html=True)
-
-def show_welcome_message(name):
-    """Display a welcome message."""
+    """Display a styled header in the chalkboard aesthetic."""
     st.markdown(f"""
-    <div style='background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); 
-                color: white; padding: 2rem; border-radius: 8px; text-align: center; 
-                margin-bottom: 2rem;'>
-        <h1 style='color: white; border: none; margin: 0;'>Welcome, {name}! 👋</h1>
-        <p style='margin: 0.5rem 0 0 0;'>Discover the novelty in your research projects</p>
+    <div style='margin-bottom: 1.5rem;'>
+        <h1 style='color: #ffffff !important; margin: 0 0 0.4rem 0; border-bottom: none !important;'>{title}</h1>
+        {f"<p style='color: #cbd5e1 !important; font-size: 1.05rem; margin: 0;'>{subtitle}</p>" if subtitle else ""}
+        <div style='width: 100%; height: 1.5px; background: rgba(255, 255, 255, 0.4); margin-top: 0.75rem;'></div>
     </div>
     """, unsafe_allow_html=True)
 
-def show_project_card(project):
-    """Display a project card."""
+def show_welcome_message(name):
+    """Display a welcome message matching the chalkboard pill capsule design."""
     st.markdown(f"""
+    <div class="dash-welcome-pill">
+        <div class="dash-welcome-title">Welcome, {name}</div>
+        <div class="dash-welcome-subtitle">Discover the novelty in your research projects</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+def render_html(html_str):
+    """Safely render HTML without accidental markdown indented code blocks."""
+    st.markdown(textwrap.dedent(html_str).strip(), unsafe_allow_html=True)
+
+def show_project_card(project):
+    """Display a project card matching the chalkboard theme."""
+    selected_novelty_html = ""
+    if project.get("selected_novelty"):
+        selected_novelty_html = f"""
+        <p style='color: #4ade80; margin: 0.5rem 0 0 0; font-size: 0.9rem;'>
+            <strong style='color: #4ade80;'>✓ Selected Novelty:</strong> {project['selected_novelty']}
+        </p>
+        """
+
+    html = f"""
     <div class='project-card'>
         <div style='display: flex; justify-content: space-between; align-items: start;'>
-            <div style='flex: 1;'>
-                <h3 style='margin: 0 0 0.5rem 0;'>{project['title']}</h3>
-                <p style='color: #334155; margin: 0 0 1rem 0; font-size: 0.95rem;'>{project['domain']}</p>
-                <div style='margin-bottom: 1rem;'>
+            <div style='flex: 1; min-width: 0;'>
+                <h3 style='margin: 0 0 0.5rem 0; color: #ffffff; word-break: break-word;'>{project['title']}</h3>
+                <p style='color: #94a3b8; margin: 0 0 0.85rem 0; font-size: 0.95rem;'>{project['domain']}</p>
+                <div style='display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.85rem;'>
                     <span class='metric-badge'>{project['status'].upper()}</span>
                     <span class='metric-badge'>{project['created_date']}</span>
+                    <span class='metric-badge'>Method: {project['method']}</span>
                 </div>
-                <p style='color: #1e293b; margin: 0; font-size: 0.9rem;'>
-                    <strong>Method:</strong> {project['method']}<br>
-                    <strong>Dataset:</strong> {project['dataset']}
+                <p style='color: #cbd5e1; margin: 0; font-size: 0.9rem;'>
+                    <strong style='color: #ffffff;'>Dataset:</strong> {project['dataset']}
                 </p>
+                {selected_novelty_html}
             </div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """
+    render_html(html)
 
 def show_info_box(message):
     """Display an info box."""
@@ -775,42 +1598,48 @@ def show_warning_box(message):
     """, unsafe_allow_html=True)
 
 def format_technologies(techs):
-    """Format technologies as styled badges."""
-    html = ""
+    """Format technologies as styled pill badges matching the theme."""
+    html = '<div style="margin: 0.5rem 0 1rem 0; display: flex; flex-wrap: wrap; gap: 0.5rem;">'
     colors = {
-        "Python": "#3776ab",
-        "TensorFlow": "#ff6f00",
-        "PyTorch": "#ee4c2c",
-        "Transformers": "#7b68ee",
-        "Pandas": "#150458",
-        "NumPy": "#013243",
-        "Keras": "#d00000",
-        "Scikit-learn": "#f7931e"
+        "Python": "#38bdf8",
+        "TensorFlow": "#fb923c",
+        "PyTorch": "#f87171",
+        "Transformers": "#a78bfa",
+        "Pandas": "#818cf8",
+        "NumPy": "#38bdf8",
+        "Keras": "#f43f5e",
+        "Scikit-learn": "#f59e0b"
     }
     
     for tech in techs:
-        color = colors.get(tech, "#2563eb")
+        color = colors.get(tech, "#94a3b8")
         html += f"""
-        <span style='display: inline-block; background-color: {color}33; 
-                     color: {color}; padding: 0.35rem 0.75rem; 
-                     border-radius: 20px; margin-right: 0.5rem; 
-                     margin-bottom: 0.5rem; font-size: 0.875rem; 
-                     border: 1px solid {color};'>
-            {tech}
+        <span style='display: inline-block; background: rgba(255, 255, 255, 0.08); 
+                     color: #ffffff; padding: 0.35rem 0.85rem; 
+                     border-radius: 9999px; font-size: 0.85rem; font-weight: 500;
+                     border: 1.5px solid {color}; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);'>
+            <span style='color: {color}; margin-right: 4px;'>&bull;</span> {tech}
         </span>
         """
+    html += '</div>'
     return html
 
 def format_similarity_percentage(percentage):
-    """Format similarity percentage with color coding."""
+    """Format similarity percentage with color coding matching the dark theme."""
     if percentage >= 75:
-        color = "#dc2626"
+        color = "#f87171"
+        bg = "rgba(239, 68, 68, 0.15)"
+        border = "rgba(239, 68, 68, 0.6)"
     elif percentage >= 60:
-        color = "#ea580c"
+        color = "#fb923c"
+        bg = "rgba(249, 115, 22, 0.15)"
+        border = "rgba(249, 115, 22, 0.6)"
     else:
-        color = "#16a34a"
+        color = "#4ade80"
+        bg = "rgba(34, 197, 94, 0.15)"
+        border = "rgba(34, 197, 94, 0.6)"
     
-    return f"<span style='font-size: 1.5rem; font-weight: 700; color: {color};'>{percentage}%</span>"
+    return f"<span style='font-size: 1.25rem; font-weight: 700; color: {color}; padding: 0.2rem 0.75rem; border-radius: 9999px; background: {bg}; border: 1px solid {border};'>{percentage}%</span>"
 
 def show_loading_animation(message="Loading..."):
     """Show a loading animation."""
@@ -933,39 +1762,36 @@ def logout():
 # ============================================================================
 
 def show_login_page():
-    """Display the login page."""
+    """Display the full-screen immersive chalkboard login page with extra demo section."""
     apply_custom_css()
     apply_login_background()
     
-    st.markdown("""
-    <div class='login-content'>
-    <div class='login-hero-panel'>
-    <div style='text-align: center; margin-bottom: 2rem;'>
-        <h1 class='login-title'>Project Novelty Detector</h1>
-        <p class='login-subtitle'>
-            Discover innovation in your research projects
-        </p>
-    </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("<h3 class='login-heading'>Student Login</h3>", unsafe_allow_html=True)
+    uri_title = get_asset_data_uri("assets/project_novelty_title_perfect.png")
     
     with st.form("login_form"):
-        username = st.text_input(
-            "Email or Username",
-            placeholder="Enter your email or username",
-            help="Use the sample credentials: john_doe / jane_smith"
-        )
+        st.markdown(f"""
+        <div class="login-brand-title">
+            <img src="{uri_title}" class="login-brand-hero-img" alt="PROJECT NOVELTY [ ANALYSER ]" />
+        </div>
+        """, unsafe_allow_html=True)
         
-        password = st.text_input(
-            "Password",
-            type="password",
-            placeholder="Enter your password",
-            help="Sample password: password123"
-        )
+        with st.container(border=True):
+            username = st.text_input(
+                "USERNAME",
+                key="login_username",
+                placeholder="USERNAME",
+                label_visibility="collapsed",
+            )
+            
+            password = st.text_input(
+                "PASSWORD",
+                key="login_password",
+                type="password",
+                placeholder="PASSWORD",
+                label_visibility="collapsed",
+            )
         
-        submitted = st.form_submit_button("Login", use_container_width=True)
+        submitted = st.form_submit_button("LOGIN", use_container_width=True)
         
         if submitted:
             if not username.strip() or not password:
@@ -973,106 +1799,151 @@ def show_login_page():
             elif authenticate_user(username, password):
                 st.success("✓ Login successful! Redirecting...")
                 st.session_state.current_page = "dashboard"
-                time.sleep(1)
+                time.sleep(0.5)
                 st.rerun()
             else:
                 st.error("❌ Invalid username or password")
                 if st.session_state.auth_backend_error:
                     st.warning(
                         "MySQL login is unavailable, so only bundled demo credentials "
-                        "can be used right now. Check MYSQL_HOST, MYSQL_USER, "
-                        "MYSQL_PASSWORD, MYSQL_DB, and whether MySQL is running."
+                        "can be used right now. Check MySQL configuration."
                     )
     
-    st.markdown("""
-    <div class='login-glass-panel'>
-        <p class='login-demo-title'>Demo Credentials</p>
-        <p class='login-demo-copy'>
-            <strong>MySQL sample after database setup:</strong><br>
-            Username: test_student<br>
-            Password: password
-        </p>
-        <p class='login-demo-copy' style='margin-top: 0.9rem;'>
-            <strong>Student 1:</strong><br>
-            Email: john@university.edu<br>
-            Password: password123
-        </p>
-        <p class='login-demo-copy' style='margin-top: 0.9rem;'>
-            <strong>Student 2:</strong><br>
-            Email: jane@university.edu<br>
-            Password: password123
-        </p>
-    </div>
-    </div>
-    """, unsafe_allow_html=True)
+    # Extra Section Down: Demo Accounts (Clean two-column layout matching reference design)
+    uri_natural_brain = get_asset_data_uri("assets/chalk_brain_natural_clean.png")
+    
+    st.markdown('<div class="demo-master-wrapper">', unsafe_allow_html=True)
+    col_brain_side, col_cards_side = st.columns([1, 1.45], gap="large")
+    
+    with col_brain_side:
+        st.markdown(f"""
+        <div class="demo-brain-stage">
+            <div class="brain-synapse-core"></div>
+            <div class="brain-spark spark-b1"></div>
+            <div class="brain-spark spark-b2"></div>
+            <div class="brain-spark spark-b3"></div>
+            <img src="{uri_natural_brain}" class="demo-brain-art" alt="Neural Brain" />
+        </div>
+        """, unsafe_allow_html=True)
+        
+    with col_cards_side:
+        st.markdown("""
+        <div class="demo-capsule-header-wrapper">
+            <div class="demo-capsule-badge"><span>Demo Accounts</span></div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        col_s1, col_s2 = st.columns(2, gap="medium")
+        with col_s1:
+            st.markdown('<div class="demo-student-container">', unsafe_allow_html=True)
+            if st.button("STUDENT 1", key="quick_login_student1", use_container_width=True):
+                if authenticate_user("john@university.edu", "password123"):
+                    st.session_state.current_page = "dashboard"
+                    st.rerun()
+            st.markdown("""
+            <div class="student-credential-pill-card">
+                <div class="student-card-header">
+                    <span class="student-name">John Doe</span>
+                    <span class="student-badge-role">RESEARCHER</span>
+                </div>
+                <div class="student-credential-row">
+                    <span class="cred-label">EMAIL</span>
+                    <code class="cred-val">john@university.edu</code>
+                </div>
+                <div class="student-credential-row">
+                    <span class="cred-label">PASSWORD</span>
+                    <code class="cred-val">password123</code>
+                </div>
+                <div class="student-card-footer">
+                    <span class="active-dot">●</span> 4 Pre-analyzed Projects Loaded
+                </div>
+            </div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+        with col_s2:
+            st.markdown('<div class="demo-student-container">', unsafe_allow_html=True)
+            if st.button("STUDENT 2", key="quick_login_student2", use_container_width=True):
+                if authenticate_user("jane_smith", "password123"):
+                    st.session_state.current_page = "dashboard"
+                    st.rerun()
+            st.markdown("""
+            <div class="student-credential-pill-card">
+                <div class="student-card-header">
+                    <span class="student-name">Jane Smith</span>
+                    <span class="student-badge-role">STUDENT</span>
+                </div>
+                <div class="student-credential-row">
+                    <span class="cred-label">USERNAME</span>
+                    <code class="cred-val">jane_smith</code>
+                </div>
+                <div class="student-credential-row">
+                    <span class="cred-label">PASSWORD</span>
+                    <code class="cred-val">password123</code>
+                </div>
+                <div class="student-card-footer">
+                    <span class="active-dot">●</span> 2 Active Research Projects Loaded
+                </div>
+            </div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+    st.markdown('</div>', unsafe_allow_html=True)
 
 def show_dashboard():
-    """Display the student dashboard."""
+    """Display the student dashboard matching the chalkboard pill mockup."""
     apply_custom_css()
     
     user = st.session_state.current_user
+    user_name = user["name"] if user else "Name"
     
-    col1, col2 = st.columns([4, 1])
+    # 1. Top Welcome Pill Capsule (Exact mockup match)
+    show_welcome_message(user_name)
+    
+    user_projects = [p for p in SAMPLE_PROJECTS if p["student_id"] == user["id"]] if user else []
+    saved_projects = len([p for p in user_projects if p["status"] == "saved"])
+    analyzed_projects = len([p for p in user_projects if p["status"] == "analyzed"])
+    
+    # 2. Three Stat Pills (Exact mockup match: Total Projects, Completed, Analyzed)
+    col1, col2, col3 = st.columns(3)
     with col1:
-        show_welcome_message(user["name"])
+        st.markdown(f"""
+        <div class="dash-stat-pill">
+            <div class="dash-stat-label">Total Projects</div>
+            <div class="dash-stat-value">{len(user_projects)}</div>
+        </div>
+        """, unsafe_allow_html=True)
     with col2:
-        if st.button("🚪 Logout", use_container_width=True):
-            logout()
-            st.rerun()
+        st.markdown(f"""
+        <div class="dash-stat-pill">
+            <div class="dash-stat-label">Completed</div>
+            <div class="dash-stat-value">{saved_projects}</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with col3:
+        st.markdown(f"""
+        <div class="dash-stat-pill">
+            <div class="dash-stat-label">Analyzed</div>
+            <div class="dash-stat-value">{analyzed_projects}</div>
+        </div>
+        """, unsafe_allow_html=True)
     
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        if st.button("✨ Create New Project", use_container_width=True, key="create_project"):
+    # Action handlers container (visually hidden via CSS to match mockup exactly)
+    with st.container(key="dashboard_quick_actions"):
+        if st.button("✨ Create New Project", key="create_project"):
             st.session_state.project_form_data = {}
             st.session_state.current_project = None
             st.session_state.current_page = "project_submission"
             st.rerun()
-    
-    with col2:
-        if st.button("📋 My Projects", use_container_width=True, key="view_projects"):
+        if st.button("📋 My Projects", key="view_projects"):
             st.session_state.current_page = "my_projects"
             st.rerun()
     
-    st.markdown("---")
-    
-    user_projects = [p for p in SAMPLE_PROJECTS if p["student_id"] == user["id"]]
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown(f"""
-        <div class='card' style='text-align: center;'>
-            <div style='font-size: 2rem; margin-bottom: 0.5rem;'>📊</div>
-            <div style='color: #334155; font-size: 0.9rem;'>Total Projects</div>
-            <div style='font-size: 2rem; font-weight: 700; color: #2563eb;'>{len(user_projects)}</div>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        saved_projects = len([p for p in user_projects if p["status"] == "saved"])
-        st.markdown(f"""
-        <div class='card' style='text-align: center;'>
-            <div style='font-size: 2rem; margin-bottom: 0.5rem;'>✅</div>
-            <div style='color: #334155; font-size: 0.9rem;'>Completed</div>
-            <div style='font-size: 2rem; font-weight: 700; color: #16a34a;'>{saved_projects}</div>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col3:
-        analyzed_projects = len([p for p in user_projects if p["status"] == "analyzed"])
-        st.markdown(f"""
-        <div class='card' style='text-align: center;'>
-            <div style='font-size: 2rem; margin-bottom: 0.5rem;'>🔍</div>
-            <div style='color: #334155; font-size: 0.9rem;'>Analyzed</div>
-            <div style='font-size: 2rem; font-weight: 700; color: #ea580c;'>{analyzed_projects}</div>
-        </div>
-        """, unsafe_allow_html=True)
+    # 3. Section Title & Full-Width Divider Line (Exact mockup match)
+    st.markdown('<div class="dash-section-header">Recent Projects</div>', unsafe_allow_html=True)
+    st.markdown('<div class="dash-section-divider"></div>', unsafe_allow_html=True)
     
     if user_projects:
-        st.markdown("### 📌 Recent Projects")
-        show_info_box(f"You have {len(user_projects)} project(s). Click 'My Projects' to view all details.")
-        
         for project in sorted(user_projects, key=lambda x: x["created_date"], reverse=True)[:3]:
             show_project_card(project)
             if st.button("View Full Details", key=f"recent_details_{project['id']}"):
@@ -1080,7 +1951,11 @@ def show_dashboard():
                 st.session_state.current_page = "project_details"
                 st.rerun()
     else:
-        st.info("👋 No projects yet. Create your first project to get started!")
+        st.markdown("""
+        <div class="card" style="text-align: center; color: #cbd5e1; padding: 2rem;">
+            No projects yet. Click <strong>Create New Project</strong> to get started!
+        </div>
+        """, unsafe_allow_html=True)
 
 def show_project_submission():
     """Display the project submission form."""
@@ -1242,26 +2117,18 @@ def show_novelty_results():
     project_data = st.session_state.project_form_data
     analysis_results = st.session_state.analysis_results
     
-    col1, col2, col3 = st.columns([1, 2, 1])
-    
-    with col1:
-        if st.button("← Back", use_container_width=True):
-            st.session_state.current_page = "dashboard"
-            st.rerun()
-    
-    with col3:
-        if st.button("Logout", use_container_width=True):
-            logout()
-            st.rerun()
+    if st.button("← Back"):
+        st.session_state.current_page = "dashboard"
+        st.rerun()
     
     st.markdown("---")
     
     tab1, tab2, tab3, tab4, tab5 = st.tabs([
-        "📋 Project Details",
-        "🔍 Similar Projects",
-        "💡 Novelty Ideas",
-        "⚠️ Limitations & Gaps",
-        "📊 Technology Analysis"
+        "Project Details",
+        "Similar Projects",
+        "Novelty Ideas",
+        "Limitations & Gaps",
+        "Technology Analysis"
     ])
     
     with tab1:
@@ -1270,37 +2137,41 @@ def show_novelty_results():
         col1, col2 = st.columns(2)
         
         with col1:
-            st.markdown(f"""
+            render_html(f"""
             <div class='card'>
-                <h4 style='margin-top: 0;'>{project_data['title']}</h4>
-                <p style='color: #1e293b; margin: 0.5rem 0;'><strong>Domain:</strong> {project_data['domain']}</p>
-                <p style='color: #1e293b; margin: 0.5rem 0;'><strong>Method:</strong> {project_data['method']}</p>
-                <p style='color: #1e293b; margin: 0.5rem 0;'><strong>Dataset:</strong> {project_data['dataset']}</p>
+                <h4 style='margin-top: 0; color: #ffffff; word-break: break-word;'>{project_data['title']}</h4>
+                <p style='color: #cbd5e1; margin: 0.5rem 0;'><strong style='color: #ffffff;'>Domain:</strong> {project_data['domain']}</p>
+                <p style='color: #cbd5e1; margin: 0.5rem 0;'><strong style='color: #ffffff;'>Method:</strong> {project_data['method']}</p>
+                <p style='color: #cbd5e1; margin: 0.5rem 0;'><strong style='color: #ffffff;'>Dataset:</strong> {project_data['dataset']}</p>
             </div>
-            """, unsafe_allow_html=True)
+            """)
         
         with col2:
-            st.markdown("""
+            render_html("""
             <div class='card'>
-                <h4 style='margin-top: 0;'>Technologies</h4>
+                <h4 style='margin-top: 0; color: #ffffff;'>Technologies</h4>
             </div>
-            """, unsafe_allow_html=True)
+            """)
             st.markdown(format_technologies(project_data['technologies']), unsafe_allow_html=True)
         
         st.markdown("#### Problem Statement")
-        st.markdown(f"""
+        render_html(f"""
         <div class='card'>
-            {project_data['problem_statement']}
+            <p style='color: #cbd5e1; line-height: 1.6; margin: 0; word-break: break-word;'>
+                {project_data['problem_statement']}
+            </p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
         
         if project_data.get('additional_info'):
             st.markdown("#### Additional Information")
-            st.markdown(f"""
+            render_html(f"""
             <div class='card'>
-                {project_data['additional_info']}
+                <p style='color: #cbd5e1; line-height: 1.6; margin: 0; word-break: break-word;'>
+                    {project_data['additional_info']}
+                </p>
             </div>
-            """, unsafe_allow_html=True)
+            """)
     
     with tab2:
         st.markdown("### Similar Existing Projects")
@@ -1314,31 +2185,31 @@ def show_novelty_results():
         if similar_projects:
             for idx, project in enumerate(similar_projects, 1):
                 with st.container():
-                    st.markdown(f"""
+                    render_html(f"""
                     <div class='card'>
                         <div style='display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;'>
-                            <div>
-                                <h4 style='margin: 0 0 0.5rem 0;'>{project['title']}</h4>
-                                <p style='color: #334155; margin: 0; font-size: 0.9rem;'>
+                            <div style='flex: 1; min-width: 0;'>
+                                <h4 style='margin: 0 0 0.5rem 0; color: #ffffff; word-break: break-word;'>{project['title']}</h4>
+                                <p style='color: #94a3b8; margin: 0; font-size: 0.9rem;'>
                                     {project['authors']} ({project['year']})
                                 </p>
                             </div>
-                            <div style='text-align: right;'>
-                                <div style='margin-bottom: 0.5rem;'>Similarity</div>
+                            <div style='text-align: right; margin-left: 1rem;'>
+                                <div style='margin-bottom: 0.5rem; color: #94a3b8; font-size: 0.85rem;'>Similarity</div>
                                 {format_similarity_percentage(project['similarity'])}
                             </div>
                         </div>
-                        <div style='background-color: #f8fafc; padding: 1rem; border-radius: 6px;'>
-                            <p style='margin: 0.5rem 0; color: #475569; font-size: 0.9rem;'>
-                                <strong>Domain:</strong> {project['domain']}<br>
-                                <strong>Method:</strong> {project['method']}<br>
+                        <div style='background: rgba(255, 255, 255, 0.04); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);'>
+                            <p style='margin: 0.5rem 0; color: #cbd5e1; font-size: 0.9rem;'>
+                                <strong style='color: #ffffff;'>Domain:</strong> {project['domain']}<br>
+                                <strong style='color: #ffffff;'>Method:</strong> {project['method']}<br>
                             </p>
                             <div style='margin-top: 1rem;'>
-                                <strong style='color: #475569; font-size: 0.9rem;'>Technologies:</strong><br>
+                                <strong style='color: #cbd5e1; font-size: 0.9rem;'>Technologies:</strong><br>
                             </div>
                         </div>
                     </div>
-                    """, unsafe_allow_html=True)
+                    """)
                     st.markdown(format_technologies(project['technologies']), unsafe_allow_html=True)
     
     with tab3:
@@ -1355,21 +2226,21 @@ def show_novelty_results():
                 col1, col2 = st.columns([4, 1])
                 
                 with col1:
-                    st.markdown(f"""
+                    render_html(f"""
                     <div class='card'>
-                        <h4 style='margin: 0 0 0.5rem 0;'>{novelty['title']}</h4>
-                        <p style='color: #1e293b; margin: 0.5rem 0; font-size: 0.95rem;'>
+                        <h4 style='margin: 0 0 0.5rem 0; color: #ffffff; word-break: break-word;'>{novelty['title']}</h4>
+                        <p style='color: #cbd5e1; margin: 0.5rem 0; font-size: 0.95rem; line-height: 1.6; word-break: break-word;'>
                             {novelty['description']}
                         </p>
                         <div style='margin-top: 1rem;'>
                             <span class='metric-badge'>Impact: {novelty['impact']}</span>
                             <span class='metric-badge'>Feasibility: {novelty['feasibility']}</span>
                         </div>
-                        <p style='color: #1e293b; margin: 1rem 0 0 0; font-size: 0.9rem;'>
-                            <strong>Details:</strong> {novelty['details']}
+                        <p style='color: #94a3b8; margin: 1rem 0 0 0; font-size: 0.9rem;'>
+                            <strong style='color: #ffffff;'>Details:</strong> {novelty['details']}
                         </p>
                     </div>
-                    """, unsafe_allow_html=True)
+                    """)
                 
                 with col2:
                     if st.button("Select", key=f"select_{novelty['id']}", use_container_width=True):
@@ -1421,17 +2292,9 @@ def show_select_novelty():
     project_data = st.session_state.project_form_data
     selected_novelty = st.session_state.selected_novelty
     
-    col1, col2 = st.columns([1, 1])
-    
-    with col1:
-        if st.button("← Back to Results", use_container_width=True):
-            st.session_state.current_page = "novelty_results"
-            st.rerun()
-    
-    with col2:
-        if st.button("Logout", use_container_width=True):
-            logout()
-            st.rerun()
+    if st.button("← Back to Results"):
+        st.session_state.current_page = "novelty_results"
+        st.rerun()
     
     st.markdown("---")
     
@@ -1445,64 +2308,64 @@ def show_select_novelty():
     with col1:
         st.markdown("### 📋 Original Project")
         
-        st.markdown(f"""
+        render_html(f"""
         <div class='card'>
-            <h4 style='margin-top: 0; color: #2563eb;'>{project_data['title']}</h4>
+            <h4 style='margin-top: 0; color: #ffffff; word-break: break-word;'>{project_data['title']}</h4>
             
-            <div style='background-color: #f8fafc; padding: 1rem; border-radius: 6px; margin: 1rem 0;'>
-                <p style='margin: 0; color: #64748b;'><strong>Domain:</strong></p>
-                <p style='margin: 0.25rem 0 1rem 0; color: #1e293b;'>{project_data['domain']}</p>
+            <div style='background: rgba(255, 255, 255, 0.04); padding: 1rem; border-radius: 12px; margin: 1rem 0; border: 1px solid rgba(255, 255, 255, 0.1);'>
+                <p style='margin: 0; color: #94a3b8;'><strong>Domain:</strong></p>
+                <p style='margin: 0.25rem 0 1rem 0; color: #ffffff;'>{project_data['domain']}</p>
                 
-                <p style='margin: 0; color: #64748b;'><strong>Method/Algorithm:</strong></p>
-                <p style='margin: 0.25rem 0 1rem 0; color: #1e293b;'>{project_data['method']}</p>
+                <p style='margin: 0; color: #94a3b8;'><strong>Method/Algorithm:</strong></p>
+                <p style='margin: 0.25rem 0 1rem 0; color: #ffffff;'>{project_data['method']}</p>
                 
-                <p style='margin: 0; color: #64748b;'><strong>Dataset:</strong></p>
-                <p style='margin: 0.25rem 0; color: #1e293b;'>{project_data['dataset']}</p>
+                <p style='margin: 0; color: #94a3b8;'><strong>Dataset:</strong></p>
+                <p style='margin: 0.25rem 0; color: #ffffff;'>{project_data['dataset']}</p>
             </div>
             
-            <p style='margin: 1rem 0 0.5rem 0;'><strong>Technologies:</strong></p>
+            <p style='margin: 1rem 0 0.5rem 0; color: #cbd5e1;'><strong>Technologies:</strong></p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
         
         st.markdown(format_technologies(project_data['technologies']), unsafe_allow_html=True)
         
-        st.markdown(f"""
+        render_html(f"""
         <div class='card' style='margin-top: 1rem;'>
-            <p style='margin: 0; color: #334155;'><strong>Problem Statement:</strong></p>
-            <p style='margin: 0.5rem 0; color: #1e293b; line-height: 1.6;'>
+            <p style='margin: 0; color: #94a3b8;'><strong>Problem Statement:</strong></p>
+            <p style='margin: 0.5rem 0; color: #cbd5e1; line-height: 1.6; word-break: break-word;'>
                 {project_data['problem_statement']}
             </p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
     
     with col2:
         st.markdown("### ✨ Selected Novelty Idea")
         
-        st.markdown(f"""
-        <div class='card' style='border-left: 4px solid #16a34a;'>
-            <h4 style='margin-top: 0; color: #16a34a;'>{selected_novelty['title']}</h4>
+        render_html(f"""
+        <div class='card' style='border-left: 4px solid #4ade80;'>
+            <h4 style='margin-top: 0; color: #4ade80; word-break: break-word;'>{selected_novelty['title']}</h4>
             
-            <p style='margin: 1rem 0; color: #1e293b; line-height: 1.6;'>
+            <p style='margin: 1rem 0; color: #cbd5e1; line-height: 1.6; word-break: break-word;'>
                 {selected_novelty['description']}
             </p>
             
-            <div style='background-color: #f8fafc; padding: 1rem; border-radius: 6px; margin: 1rem 0;'>
-                <p style='margin: 0; color: #334155;'><strong>Implementation Details:</strong></p>
-                <p style='margin: 0.5rem 0; color: #1e293b;'>{selected_novelty['details']}</p>
+            <div style='background: rgba(255, 255, 255, 0.04); padding: 1rem; border-radius: 12px; margin: 1rem 0; border: 1px solid rgba(255, 255, 255, 0.1);'>
+                <p style='margin: 0; color: #94a3b8;'><strong>Implementation Details:</strong></p>
+                <p style='margin: 0.5rem 0; color: #ffffff; word-break: break-word;'>{selected_novelty['details']}</p>
             </div>
             
             <div style='display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin: 1rem 0 0 0;'>
-                <div style='background-color: #dcfce7; padding: 0.75rem; border-radius: 6px;'>
-                    <p style='margin: 0; color: #15803d; font-size: 0.85rem;'>Impact</p>
-                    <p style='margin: 0.25rem 0 0 0; color: #166534; font-weight: 600;'>{selected_novelty['impact']}</p>
+                <div style='background: rgba(74, 222, 128, 0.12); border: 1px solid rgba(74, 222, 128, 0.4); padding: 0.75rem; border-radius: 9999px; text-align: center;'>
+                    <p style='margin: 0; color: #4ade80; font-size: 0.85rem;'>Impact</p>
+                    <p style='margin: 0.25rem 0 0 0; color: #ffffff; font-weight: 600;'>{selected_novelty['impact']}</p>
                 </div>
-                <div style='background-color: #dbeafe; padding: 0.75rem; border-radius: 6px;'>
-                    <p style='margin: 0; color: #0c4a6e; font-size: 0.85rem;'>Feasibility</p>
-                    <p style='margin: 0.25rem 0 0 0; color: #164e63; font-weight: 600;'>{selected_novelty['feasibility']}</p>
+                <div style='background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.4); padding: 0.75rem; border-radius: 9999px; text-align: center;'>
+                    <p style='margin: 0; color: #38bdf8; font-size: 0.85rem;'>Feasibility</p>
+                    <p style='margin: 0.25rem 0 0 0; color: #ffffff; font-weight: 600;'>{selected_novelty['feasibility']}</p>
                 </div>
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
     
     st.markdown("---")
     
@@ -1552,17 +2415,9 @@ def show_my_projects():
     
     user = st.session_state.current_user
     
-    col1, col2, col3 = st.columns([1, 2, 1])
-    
-    with col1:
-        if st.button("← Dashboard", use_container_width=True):
-            st.session_state.current_page = "dashboard"
-            st.rerun()
-    
-    with col3:
-        if st.button("🚪 Logout", use_container_width=True):
-            logout()
-            st.rerun()
+    if st.button("← Dashboard"):
+        st.session_state.current_page = "dashboard"
+        st.rerun()
     
     st.markdown("---")
     
@@ -1611,34 +2466,11 @@ def show_my_projects():
             filtered_projects = user_projects
         
         for project in sorted(filtered_projects, key=lambda x: x["created_date"], reverse=True):
-            with st.container():
-                st.markdown(f"""
-                <div class='project-card'>
-                    <div style='display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;'>
-                        <div style='flex: 1;'>
-                            <h3 style='margin: 0 0 0.5rem 0; color: #1e293b;'>{project['title']}</h3>
-                            <p style='color: #334155; margin: 0 0 1rem 0; font-size: 0.95rem;'>{project['domain']}</p>
-                            
-                            <div style='display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;'>
-                                <span class='metric-badge'>{project['status'].upper()}</span>
-                                <span class='metric-badge'>{project['created_date']}</span>
-                                <span class='metric-badge'>Method: {project['method']}</span>
-                            </div>
-                            
-                            <p style='color: #1e293b; margin: 0; font-size: 0.9rem;'>
-                                <strong>Dataset:</strong> {project['dataset']}
-                            </p>
-                            
-                            {f"<p style='color: #16a34a; margin: 0.5rem 0 0 0; font-size: 0.9rem;'><strong>✓ Selected Novelty:</strong> {project['selected_novelty']}</p>" if project.get('selected_novelty') else ""}
-                        </div>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
-                
-                if st.button("View Full Details", key=f"details_{project['id']}", use_container_width=False):
-                    st.session_state.current_project = project
-                    st.session_state.current_page = "project_details"
-                    st.rerun()
+            show_project_card(project)
+            if st.button("View Full Details", key=f"details_{project['id']}", use_container_width=False):
+                st.session_state.current_project = project
+                st.session_state.current_page = "project_details"
+                st.rerun()
         
         st.markdown("---")
         
@@ -1655,25 +2487,17 @@ def show_project_details():
     
     show_header(project["title"], f"Submitted for {project['domain']}")
     
-    col1, col2, col3 = st.columns([1, 2, 1])
-    
-    with col1:
-        if st.button("← My Projects", use_container_width=True):
-            st.session_state.current_page = "my_projects"
-            st.rerun()
-    
-    with col3:
-        if st.button("🚪 Logout", use_container_width=True):
-            logout()
-            st.rerun()
+    if st.button("← My Projects"):
+        st.session_state.current_page = "my_projects"
+        st.rerun()
     
     st.markdown("---")
     
     tab1, tab2, tab3, tab4 = st.tabs([
-        "📋 Project Info",
-        "💡 Novelty Suggestion",
-        "🔍 Similar Projects",
-        "📊 Analysis Summary"
+        "Project Info",
+        "Novelty Suggestion",
+        "Similiar Projects",
+        "Analysed Summary"
     ])
     
     with tab1:
@@ -1682,63 +2506,63 @@ def show_project_details():
         col1, col2 = st.columns(2)
         
         with col1:
-            st.markdown(f"""
+            render_html(f"""
             <div class='card'>
-                <p style='margin: 0; color: #334155; font-size: 0.9rem;'><strong>Domain</strong></p>
-                <p style='margin: 0.5rem 0; color: #1e293b; font-weight: 600;'>{project['domain']}</p>
+                <p style='margin: 0; color: #94a3b8; font-size: 0.9rem;'><strong>Domain</strong></p>
+                <p style='margin: 0.5rem 0; color: #ffffff; font-weight: 600;'>{project['domain']}</p>
                 
-                <p style='margin: 1rem 0 0 0; color: #334155; font-size: 0.9rem;'><strong>Method/Algorithm</strong></p>
-                <p style='margin: 0.5rem 0; color: #1e293b; font-weight: 600;'>{project['method']}</p>
+                <p style='margin: 1rem 0 0 0; color: #94a3b8; font-size: 0.9rem;'><strong>Method/Algorithm</strong></p>
+                <p style='margin: 0.5rem 0; color: #ffffff; font-weight: 600;'>{project['method']}</p>
                 
-                <p style='margin: 1rem 0 0 0; color: #334155; font-size: 0.9rem;'><strong>Dataset</strong></p>
-                <p style='margin: 0.5rem 0; color: #1e293b; font-weight: 600;'>{project['dataset']}</p>
+                <p style='margin: 1rem 0 0 0; color: #94a3b8; font-size: 0.9rem;'><strong>Dataset</strong></p>
+                <p style='margin: 0.5rem 0; color: #ffffff; font-weight: 600;'>{project['dataset']}</p>
             </div>
-            """, unsafe_allow_html=True)
+            """)
         
         with col2:
-            st.markdown(f"""
+            render_html(f"""
             <div class='card'>
-                <p style='margin: 0; color: #334155; font-size: 0.9rem;'><strong>Status</strong></p>
-                <p style='margin: 0.5rem 0; color: #2563eb; font-weight: 600;'>{project['status'].upper()}</p>
+                <p style='margin: 0; color: #94a3b8; font-size: 0.9rem;'><strong>Status</strong></p>
+                <p style='margin: 0.5rem 0; color: #38bdf8; font-weight: 600;'>{project['status'].upper()}</p>
                 
-                <p style='margin: 1rem 0 0 0; color: #334155; font-size: 0.9rem;'><strong>Submitted</strong></p>
-                <p style='margin: 0.5rem 0; color: #1e293b; font-weight: 600;'>{project['created_date']}</p>
+                <p style='margin: 1rem 0 0 0; color: #94a3b8; font-size: 0.9rem;'><strong>Submitted</strong></p>
+                <p style='margin: 0.5rem 0; color: #ffffff; font-weight: 600;'>{project['created_date']}</p>
             </div>
-            """, unsafe_allow_html=True)
+            """)
         
         st.markdown("#### Technologies Used")
         st.markdown(format_technologies(project['technologies']), unsafe_allow_html=True)
         
         st.markdown("#### Problem Statement")
-        st.markdown(f"""
+        render_html(f"""
         <div class='card'>
-            <p style='color: #475569; line-height: 1.6; margin: 0;'>
+            <p style='color: #cbd5e1; line-height: 1.6; margin: 0; word-break: break-word;'>
                 {project['problem_statement']}
             </p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
     
     with tab2:
         if project.get('selected_novelty'):
             st.markdown("### Selected Novelty Idea")
-            st.markdown(f"""
-            <div class='card' style='border-left: 4px solid #16a34a;'>
-                <h4 style='margin-top: 0; color: #16a34a;'>{project['selected_novelty']}</h4>
-                <p style='color: #475569; margin: 1rem 0;'>
+            render_html(f"""
+            <div class='card' style='border-left: 4px solid #4ade80;'>
+                <h4 style='margin-top: 0; color: #4ade80; word-break: break-word;'>{project['selected_novelty']}</h4>
+                <p style='color: #cbd5e1; margin: 1rem 0; line-height: 1.6; word-break: break-word;'>
                     This novelty suggestion was selected to enhance your research project.
                 </p>
             </div>
-            """, unsafe_allow_html=True)
+            """)
             
             if project.get('notes'):
                 st.markdown("#### Your Notes")
-                st.markdown(f"""
+                render_html(f"""
                 <div class='card'>
-                    <p style='color: #475569; line-height: 1.6; margin: 0;'>
+                    <p style='color: #cbd5e1; line-height: 1.6; margin: 0; word-break: break-word;'>
                         {project['notes']}
                     </p>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
         else:
             st.info("No novelty idea selected for this project yet.")
     
@@ -1767,22 +2591,22 @@ def show_project_details():
         ]
         
         for proj in similar_projects:
-            st.markdown(f"""
+            render_html(f"""
             <div class='card'>
                 <div style='display: flex; justify-content: space-between; align-items: start;'>
-                    <div style='flex: 1;'>
-                        <h4 style='margin: 0 0 0.5rem 0;'>{proj['title']}</h4>
-                        <p style='color: #64748b; margin: 0; font-size: 0.9rem;'>
+                    <div style='flex: 1; min-width: 0;'>
+                        <h4 style='margin: 0 0 0.5rem 0; color: #ffffff; word-break: break-word;'>{proj['title']}</h4>
+                        <p style='color: #94a3b8; margin: 0; font-size: 0.9rem;'>
                             {proj['authors']} ({proj['year']})
                         </p>
                     </div>
-                    <div style='text-align: right;'>
-                        <div style='color: #64748b; font-size: 0.9rem;'>Similarity</div>
+                    <div style='text-align: right; margin-left: 1rem;'>
+                        <div style='color: #94a3b8; font-size: 0.85rem; margin-bottom: 0.35rem;'>Similarity</div>
                         {format_similarity_percentage(proj['similarity'])}
                     </div>
                 </div>
             </div>
-            """, unsafe_allow_html=True)
+            """)
     
     with tab4:
         st.markdown("### Analysis Summary")
@@ -1834,8 +2658,10 @@ def show_navigation():
         st.session_state.current_page = page
 
     with st.sidebar:
-        st.title("Project Novelty Detector")
-        st.caption(st.session_state.current_user["name"])
+        st.markdown('<div class="sidebar-brand-pill">Project Novelty Detector</div>', unsafe_allow_html=True)
+        st.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
+        user_name = st.session_state.current_user["name"] if st.session_state.current_user else "Name"
+        st.markdown(f'<div class="sidebar-user-name">{user_name}</div>', unsafe_allow_html=True)
         for label, page in (
             ("Dashboard", "dashboard"),
             ("My Projects", "my_projects"),
