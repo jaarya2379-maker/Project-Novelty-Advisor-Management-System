@@ -819,39 +819,63 @@ def apply_login_background():
             overflow: hidden !important;
         }}
 
-        /* 1b. Expansive Floating Chalk Bulbs Stage at Top Left */
-        .chalk-bulbs-flow-stage {{
-            position: absolute !important;
-            left: 24vw !important;
-            top: 2rem !important;
-            transform: translateX(-50%) !important;
-            width: min(45vw, 540px) !important;
-            max-width: 540px !important;
-            height: auto !important;
-            pointer-events: none !important;
-            z-index: 1 !important;
+        /* 1b. Immersive Connected Balloon Bulbs & Big Brain Stage */
+        .login-layout-master-container {{
+            width: min(1280px, 96vw) !important;
+            max-width: 1280px !important;
+            margin: 1.5rem auto 4rem auto !important;
+            padding: 0 !important;
+            position: relative !important;
+            z-index: 10 !important;
         }}
 
-        .chalk-bulbs-art-intact {{
+        .chalk-balloon-neural-stage {{
+            position: relative !important;
+            width: 100% !important;
+            max-width: 580px !important;
+            margin: 0 auto !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            pointer-events: none !important;
+            user-select: none !important;
+        }}
+
+        /* Bulbs flowing like balloons on tethered strings attached to the Big Brain */
+        .chalk-balloon-tree {{
+            position: relative !important;
+            width: 100% !important;
+            transform-origin: 48.6% 77.2% !important; /* Anchored at center of Big Brain */
+            animation: balloonTetheredFloat 7.5s ease-in-out infinite !important;
+            will-change: transform !important;
+        }}
+
+        @keyframes balloonTetheredFloat {{
+            0%, 100% {{
+                transform: translateY(0px) rotate(0deg);
+            }}
+            20% {{
+                transform: translateY(-16px) rotate(-1.8deg);
+            }}
+            40% {{
+                transform: translateY(-6px) rotate(1.2deg);
+            }}
+            60% {{
+                transform: translateY(-22px) rotate(-1.2deg);
+            }}
+            80% {{
+                transform: translateY(-8px) rotate(2.0deg);
+            }}
+        }}
+
+        .chalk-balloon-artwork {{
             width: 100% !important;
             height: auto !important;
             display: block !important;
-            will-change: transform, filter !important;
-            animation: chalkArtworkGentleBreathe 6.5s ease-in-out infinite !important;
-            transform-origin: 50% 25% !important;
             filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.35))
                     drop-shadow(0 0 60px rgba(255, 235, 170, 0.18))
                     drop-shadow(0 25px 45px rgba(0, 0, 0, 0.85)) !important;
             pointer-events: none !important;
-        }}
-
-        @keyframes chalkArtworkGentleBreathe {{
-            0%, 100% {{
-                transform: translateY(0px) scale(1);
-            }}
-            50% {{
-                transform: translateY(-8px) scale(1.008);
-            }}
         }}
 
         /* Independent Flowing Light Luminescence Cores for the Bulbs */
@@ -864,50 +888,50 @@ def apply_login_background():
             will-change: transform, opacity !important;
         }}
 
-        /* Bulb 1 Glow: Upper Left (x: 11.5%, y: 13.5%) */
+        /* Bulb 1 Glow: Upper Left (x: 12.0%, y: 10.3%) */
         .glow-bulb-1 {{
-            left: 11.5% !important;
-            top: 13.5% !important;
-            width: 22% !important;
-            height: 10% !important;
+            left: 12.0% !important;
+            top: 10.3% !important;
+            width: 20% !important;
+            height: 9% !important;
             background: radial-gradient(circle, rgba(255, 245, 210, 0.6) 0%, rgba(255, 215, 130, 0.25) 45%, transparent 75%) !important;
             animation: pulseGlow1 4.6s ease-in-out infinite -1.2s !important;
         }}
 
-        /* Bulb 2 Glow: Lower Left (x: 16.5%, y: 30.7%) */
+        /* Bulb 2 Glow: Lower Left (x: 18.5%, y: 32.4%) */
         .glow-bulb-2 {{
-            left: 16.5% !important;
-            top: 30.7% !important;
-            width: 20% !important;
-            height: 9% !important;
+            left: 18.5% !important;
+            top: 32.4% !important;
+            width: 22% !important;
+            height: 10% !important;
             background: radial-gradient(circle, rgba(255, 240, 200, 0.55) 0%, rgba(255, 210, 120, 0.22) 45%, transparent 75%) !important;
             animation: pulseGlow2 4.0s ease-in-out infinite -2.6s !important;
         }}
 
-        /* Bulb 3 Glow: Grand Hero Center (x: 46.5%, y: 15.1%) */
+        /* Bulb 3 Glow: Grand Hero Center (x: 46.2%, y: 16.2%) */
         .glow-bulb-3 {{
-            left: 46.5% !important;
-            top: 15.1% !important;
+            left: 46.2% !important;
+            top: 16.2% !important;
             width: 44% !important;
             height: 19% !important;
             background: radial-gradient(circle, rgba(255, 255, 235, 0.7) 0%, rgba(255, 230, 150, 0.38) 40%, rgba(255, 190, 80, 0.16) 65%, transparent 85%) !important;
             animation: pulseGlow3 6.0s ease-in-out infinite 0s !important;
         }}
 
-        /* Bulb 4 Glow: Lower Center (x: 60.0%, y: 34.3%) */
+        /* Bulb 4 Glow: Lower Center (x: 59.1%, y: 36.0%) */
         .glow-bulb-4 {{
-            left: 60.0% !important;
-            top: 34.3% !important;
-            width: 16% !important;
-            height: 8% !important;
+            left: 59.1% !important;
+            top: 36.0% !important;
+            width: 18% !important;
+            height: 9% !important;
             background: radial-gradient(circle, rgba(255, 245, 210, 0.65) 0%, rgba(255, 220, 130, 0.28) 45%, transparent 75%) !important;
             animation: pulseGlow4 3.4s ease-in-out infinite -1.9s !important;
         }}
 
-        /* Bulb 5 Glow: Right Bulb (x: 84.5%, y: 22.9%) */
+        /* Bulb 5 Glow: Right Bulb (x: 82.6%, y: 19.1%) */
         .glow-bulb-5 {{
-            left: 84.5% !important;
-            top: 22.9% !important;
+            left: 82.6% !important;
+            top: 19.1% !important;
             width: 26% !important;
             height: 12% !important;
             background: radial-gradient(circle, rgba(255, 245, 210, 0.6) 0%, rgba(255, 215, 130, 0.25) 45%, transparent 75%) !important;
@@ -1267,16 +1291,16 @@ def apply_login_background():
             animation: chalkArtworkGentleBreathe 6.5s ease-in-out infinite !important;
         }}
 
-        /* Glowing Neural Synaptic Center inside brain */
+        /* Glowing Neural Synaptic Center inside Big Brain */
         .brain-synapse-core {{
             position: absolute !important;
-            width: 44% !important;
-            height: 22% !important;
-            top: 80.7% !important;
-            left: 53.3% !important;
+            width: 48% !important;
+            height: 20% !important;
+            top: 77.2% !important;
+            left: 48.6% !important;
             transform: translate(-50%, -50%) !important;
             border-radius: 50% !important;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.5) 0%, rgba(255, 255, 255, 0.25) 40%, transparent 70%) !important;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.6) 0%, rgba(255, 255, 255, 0.3) 40%, transparent 70%) !important;
             filter: blur(14px) !important;
             mix-blend-mode: screen !important;
             pointer-events: none !important;
@@ -1288,7 +1312,7 @@ def apply_login_background():
             50% {{ opacity: 0.95; transform: translate(-50%, -50%) scale(1.14); }}
         }}
 
-        /* Synaptic sparks around the cerebral lobes */
+        /* Synaptic sparks around the Big Brain lobes */
         .brain-spark {{
             position: absolute !important;
             border-radius: 50% !important;
@@ -1298,17 +1322,17 @@ def apply_login_background():
 
         .spark-b1 {{
             width: 6px; height: 6px;
-            left: 45%; top: 78%;
+            left: 42%; top: 74%;
             animation: sparkPulse1 3.2s ease-in-out infinite -0.6s !important;
         }}
         .spark-b2 {{
             width: 7px; height: 7px;
-            left: 60%; top: 83%;
+            left: 55%; top: 79%;
             animation: sparkPulse2 4.1s ease-in-out infinite -1.9s !important;
         }}
         .spark-b3 {{
             width: 5px; height: 5px;
-            left: 52%; top: 85%;
+            left: 47%; top: 82%;
             animation: sparkPulse1 3.7s ease-in-out infinite -2.4s !important;
         }}
 
@@ -1492,25 +1516,7 @@ def apply_login_background():
         }}
     </style>
     """
-    stage_html = f"""
-    <div class="chalk-bulbs-flow-stage">
-        <!-- Floating luminous chalk sparks -->
-        <div class="chalk-light-spark spark-1"></div>
-        <div class="chalk-light-spark spark-2"></div>
-        <div class="chalk-light-spark spark-3"></div>
-        <div class="chalk-light-spark spark-4"></div>
-        <div class="chalk-light-spark spark-5"></div>
-        <!-- 5 Independent Flowing Light Luminescence Cores for the Bulbs -->
-        <div class="bulb-glow-core glow-bulb-1"></div>
-        <div class="bulb-glow-core glow-bulb-2"></div>
-        <div class="bulb-glow-core glow-bulb-3"></div>
-        <div class="bulb-glow-core glow-bulb-4"></div>
-        <div class="bulb-glow-core glow-bulb-5"></div>
-        <!-- Authentic Intact Chalk Lightbulbs -->
-        <img src="{uri_bulbs}" class="chalk-bulbs-art-intact" alt="Chalk Lightbulbs" />
-    </div>
-    """
-    st.markdown(css + stage_html, unsafe_allow_html=True)
+    st.markdown(css, unsafe_allow_html=True)
 
 # ============================================================================
 # UI HELPER FUNCTIONS
@@ -1762,73 +1768,88 @@ def logout():
 # ============================================================================
 
 def show_login_page():
-    """Display the full-screen immersive chalkboard login page with extra demo section."""
+    """Display the full-screen immersive chalkboard login page with connected balloon bulbs and big brain."""
     apply_custom_css()
     apply_login_background()
     
     uri_title = get_asset_data_uri("assets/project_novelty_title_perfect.png")
+    uri_connected = get_asset_data_uri("assets/chalk_bulbs_and_brain_connected.png")
     
-    with st.form("login_form"):
+    st.markdown('<div class="login-layout-master-container">', unsafe_allow_html=True)
+    col_art_side, col_ui_side = st.columns([1, 1.15], gap="large")
+    
+    with col_art_side:
         st.markdown(f"""
-        <div class="login-brand-title">
-            <img src="{uri_title}" class="login-brand-hero-img" alt="PROJECT NOVELTY [ ANALYSER ]" />
+        <div class="chalk-balloon-neural-stage">
+            <div class="chalk-balloon-tree">
+                <!-- 5 Independent Flowing Light Luminescence Cores for the Bulbs -->
+                <div class="bulb-glow-core glow-bulb-1"></div>
+                <div class="bulb-glow-core glow-bulb-2"></div>
+                <div class="bulb-glow-core glow-bulb-3"></div>
+                <div class="bulb-glow-core glow-bulb-4"></div>
+                <div class="bulb-glow-core glow-bulb-5"></div>
+                <!-- Floating luminous chalk sparks -->
+                <div class="chalk-light-spark spark-1"></div>
+                <div class="chalk-light-spark spark-2"></div>
+                <div class="chalk-light-spark spark-3"></div>
+                <div class="chalk-light-spark spark-4"></div>
+                <div class="chalk-light-spark spark-5"></div>
+                <!-- Neural Synaptic Glow & Sparks for the Big Brain -->
+                <div class="brain-synapse-core"></div>
+                <div class="brain-spark spark-b1"></div>
+                <div class="brain-spark spark-b2"></div>
+                <div class="brain-spark spark-b3"></div>
+                <!-- Master Connected Artwork: Bulbs flowing like balloons joined to Big Brain -->
+                <img src="{uri_connected}" class="chalk-balloon-artwork" alt="Chalk lightbulbs flowing like balloons joined to Big Brain" />
+            </div>
         </div>
         """, unsafe_allow_html=True)
         
-        with st.container(border=True):
-            username = st.text_input(
-                "USERNAME",
-                key="login_username",
-                placeholder="USERNAME",
-                label_visibility="collapsed",
-            )
+    with col_ui_side:
+        with st.form("login_form"):
+            st.markdown(f"""
+            <div class="login-brand-title">
+                <img src="{uri_title}" class="login-brand-hero-img" alt="PROJECT NOVELTY [ ANALYSER ]" />
+            </div>
+            """, unsafe_allow_html=True)
             
-            password = st.text_input(
-                "PASSWORD",
-                key="login_password",
-                type="password",
-                placeholder="PASSWORD",
-                label_visibility="collapsed",
-            )
+            with st.container(border=True):
+                username = st.text_input(
+                    "USERNAME",
+                    key="login_username",
+                    placeholder="USERNAME",
+                    label_visibility="collapsed",
+                )
+                
+                password = st.text_input(
+                    "PASSWORD",
+                    key="login_password",
+                    type="password",
+                    placeholder="PASSWORD",
+                    label_visibility="collapsed",
+                )
+            
+            submitted = st.form_submit_button("LOGIN", use_container_width=True)
+            
+            if submitted:
+                if not username.strip() or not password:
+                    st.error("❌ Please enter both username and password")
+                elif authenticate_user(username, password):
+                    st.success("✓ Login successful! Redirecting...")
+                    st.session_state.current_page = "dashboard"
+                    time.sleep(0.5)
+                    st.rerun()
+                else:
+                    st.error("❌ Invalid username or password")
+                    if st.session_state.auth_backend_error:
+                        st.warning(
+                            "MySQL login is unavailable, so only bundled demo credentials "
+                            "can be used right now. Check MySQL configuration."
+                        )
         
-        submitted = st.form_submit_button("LOGIN", use_container_width=True)
-        
-        if submitted:
-            if not username.strip() or not password:
-                st.error("❌ Please enter both username and password")
-            elif authenticate_user(username, password):
-                st.success("✓ Login successful! Redirecting...")
-                st.session_state.current_page = "dashboard"
-                time.sleep(0.5)
-                st.rerun()
-            else:
-                st.error("❌ Invalid username or password")
-                if st.session_state.auth_backend_error:
-                    st.warning(
-                        "MySQL login is unavailable, so only bundled demo credentials "
-                        "can be used right now. Check MySQL configuration."
-                    )
-    
-    # Extra Section Down: Demo Accounts (Clean two-column layout matching reference design)
-    uri_natural_brain = get_asset_data_uri("assets/chalk_brain_natural_clean.png")
-    
-    st.markdown('<div class="demo-master-wrapper">', unsafe_allow_html=True)
-    col_brain_side, col_cards_side = st.columns([1, 1.45], gap="large")
-    
-    with col_brain_side:
-        st.markdown(f"""
-        <div class="demo-brain-stage">
-            <div class="brain-synapse-core"></div>
-            <div class="brain-spark spark-b1"></div>
-            <div class="brain-spark spark-b2"></div>
-            <div class="brain-spark spark-b3"></div>
-            <img src="{uri_natural_brain}" class="demo-brain-art" alt="Neural Brain" />
-        </div>
-        """, unsafe_allow_html=True)
-        
-    with col_cards_side:
+        # Demo Accounts Section directly on the UI column
         st.markdown("""
-        <div class="demo-capsule-header-wrapper">
+        <div class="demo-capsule-header-wrapper" style="margin-top: 2rem;">
             <div class="demo-capsule-badge"><span>Demo Accounts</span></div>
         </div>
         """, unsafe_allow_html=True)
