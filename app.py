@@ -322,65 +322,96 @@ def apply_custom_css():
         }
 
         /* 4. Dashboard Specific Components (Exact Mockup Match) */
-        .dash-welcome-pill {
-            width: min(620px, 94%);
-            margin: 1rem auto 2.2rem auto;
-            padding: 1.35rem 3rem;
-            border: 1.5px solid rgba(255, 255, 255, 0.85);
-            border-radius: 9999px;
-            background: rgba(26, 26, 34, 0.75);
-            backdrop-filter: blur(14px);
+        .dash-hero-wrapper {
+            width: 100%;
+            max-width: 880px;
+            margin: 0 auto 0.75rem auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .dash-hero-stage {
+            position: relative;
+            width: 100%;
+            max-width: 862px;
+            margin: 0 auto;
+        }
+
+        .dash-hero-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .dash-hero-overlay {
+            position: absolute;
+            top: 48%;
+            left: 53.4%;
+            transform: translate(-50%, -50%);
+            width: 65%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+            pointer-events: none;
         }
 
         .dash-welcome-title {
-            font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+            font-size: clamp(1.2rem, 2.2vw, 1.8rem);
             font-weight: 400;
             color: #ffffff;
-            margin-bottom: 0.35rem;
-            letter-spacing: 0.4px;
+            margin: 0 0 0.35rem 0;
+            letter-spacing: 0.3px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
         }
 
         .dash-welcome-subtitle {
-            font-size: 0.95rem;
-            color: #cbd5e1;
+            font-size: clamp(0.78rem, 1.3vw, 1.02rem);
+            color: #f1f5f9;
             font-weight: 400;
+            letter-spacing: 0.1px;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
         }
 
         /* 3 Stats Pills (Capsules / Ovals) */
         .dash-stat-pill {
             width: 100%;
-            border: 1.5px solid rgba(255, 255, 255, 0.85);
+            height: 52px;
+            min-height: 52px;
+            border: 1.5px solid rgba(255, 255, 255, 0.95);
             border-radius: 9999px;
-            background: rgba(26, 26, 34, 0.75);
-            backdrop-filter: blur(12px);
-            padding: 1.25rem 1rem;
-            text-align: center;
+            background: #000000;
+            padding: 0 1rem;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-align: center;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            box-sizing: border-box;
+            cursor: pointer;
         }
 
         .dash-stat-pill:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 16px rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
+            border-color: #ffffff;
         }
 
-        .dash-stat-label {
-            color: #cbd5e1;
-            font-size: 0.95rem;
-            font-weight: 400;
-        }
-
-        .dash-stat-value {
+        .dash-stat-pill span {
             color: #ffffff;
-            font-size: 1.55rem;
-            font-weight: 600;
-            margin-top: 0.25rem;
+            font-size: 1.05rem;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
         /* Hide dashboard quick action buttons as per user mockup */
@@ -1315,11 +1346,18 @@ def show_header(title, subtitle=""):
     """, unsafe_allow_html=True)
 
 def show_welcome_message(name):
-    """Display a welcome message matching the chalkboard pill capsule design."""
+    """Display the chalkboard hanging-bulbs hero header with centered welcome pill matching mockup."""
+    display_name = name if name and name.strip() else "Name"
+    uri_hero = get_asset_data_uri("assets/dashboard_header_hero.png")
     st.markdown(f"""
-    <div class="dash-welcome-pill">
-        <div class="dash-welcome-title">Welcome, {name}</div>
-        <div class="dash-welcome-subtitle">Discover the novelty in your research projects</div>
+    <div class="dash-hero-wrapper">
+        <div class="dash-hero-stage">
+            <img src="{uri_hero}" class="dash-hero-img" alt="Dashboard Hanging Bulbs Banner" />
+            <div class="dash-hero-overlay">
+                <div class="dash-welcome-title">Welcome, {display_name}</div>
+                <div class="dash-welcome-subtitle">Discover the novelty in your research projects</div>
+            </div>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -1687,23 +1725,20 @@ def show_dashboard():
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown(f"""
-        <div class="dash-stat-pill">
-            <div class="dash-stat-label">Total Projects</div>
-            <div class="dash-stat-value">{len(user_projects)}</div>
+        <div class="dash-stat-pill" title="Total Projects: {len(user_projects)}">
+            <span>Total Projects</span>
         </div>
         """, unsafe_allow_html=True)
     with col2:
         st.markdown(f"""
-        <div class="dash-stat-pill">
-            <div class="dash-stat-label">Completed</div>
-            <div class="dash-stat-value">{saved_projects}</div>
+        <div class="dash-stat-pill" title="Completed: {saved_projects}">
+            <span>Completed</span>
         </div>
         """, unsafe_allow_html=True)
     with col3:
         st.markdown(f"""
-        <div class="dash-stat-pill">
-            <div class="dash-stat-label">Analyzed</div>
-            <div class="dash-stat-value">{analyzed_projects}</div>
+        <div class="dash-stat-pill" title="Analyzed: {analyzed_projects}">
+            <span>Analyzed</span>
         </div>
         """, unsafe_allow_html=True)
     
