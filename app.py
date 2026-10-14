@@ -819,20 +819,33 @@ def apply_login_background():
             overflow: hidden !important;
         }}
 
-        /* 1b. Immersive Connected Balloon Bulbs & Big Brain Stage */
-        .login-layout-master-container {{
-            width: min(1280px, 96vw) !important;
-            max-width: 1280px !important;
-            margin: 1.5rem auto 4rem auto !important;
+        /* 1b. Immersive Connected Balloon Bulbs & Big Brain Stage + Login Split Layout */
+        [data-testid="stHorizontalBlock"]:has(.chalk-balloon-neural-stage),
+        .main .block-container > div > div > [data-testid="stHorizontalBlock"] {{
+            width: min(1200px, 95vw) !important;
+            max-width: 1200px !important;
+            margin: 1.5rem auto 3.5rem auto !important;
             padding: 0 !important;
+            align-items: center !important;
+            justify-content: center !important;
             position: relative !important;
             z-index: 10 !important;
+        }}
+
+        /* Demo buttons nested horizontal columns inside right column */
+        [data-testid="column"] [data-testid="stHorizontalBlock"] {{
+            width: 100% !important;
+            max-width: 440px !important;
+            margin: 0 auto !important;
+            padding: 0 !important;
+            gap: 1rem !important;
+            align-items: flex-start !important;
         }}
 
         .chalk-balloon-neural-stage {{
             position: relative !important;
             width: 100% !important;
-            max-width: 580px !important;
+            max-width: 480px !important;
             margin: 0 auto !important;
             display: flex !important;
             align-items: center !important;
@@ -845,7 +858,7 @@ def apply_login_background():
         .chalk-balloon-tree {{
             position: relative !important;
             width: 100% !important;
-            transform-origin: 48.6% 77.2% !important; /* Anchored at center of Big Brain */
+            transform-origin: 48.6% 80.0% !important; /* Anchored at center of Big Brain */
             animation: balloonTetheredFloat 7.5s ease-in-out infinite !important;
             will-change: transform !important;
         }}
@@ -870,6 +883,8 @@ def apply_login_background():
 
         .chalk-balloon-artwork {{
             width: 100% !important;
+            max-height: 82vh !important;
+            object-fit: contain !important;
             height: auto !important;
             display: block !important;
             filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.35))
@@ -888,52 +903,52 @@ def apply_login_background():
             will-change: transform, opacity !important;
         }}
 
-        /* Bulb 1 Glow: Upper Left (x: 12.0%, y: 10.3%) */
+        /* Bulb 1 Glow: Upper Left (x: 18.0%, y: 12.6%) */
         .glow-bulb-1 {{
-            left: 12.0% !important;
-            top: 10.3% !important;
-            width: 20% !important;
-            height: 9% !important;
+            left: 18.0% !important;
+            top: 12.6% !important;
+            width: 22% !important;
+            height: 11% !important;
             background: radial-gradient(circle, rgba(255, 245, 210, 0.6) 0%, rgba(255, 215, 130, 0.25) 45%, transparent 75%) !important;
             animation: pulseGlow1 4.6s ease-in-out infinite -1.2s !important;
         }}
 
-        /* Bulb 2 Glow: Lower Left (x: 18.5%, y: 32.4%) */
+        /* Bulb 2 Glow: Lower Left (x: 23.4%, y: 31.6%) */
         .glow-bulb-2 {{
-            left: 18.5% !important;
-            top: 32.4% !important;
+            left: 23.4% !important;
+            top: 31.6% !important;
             width: 22% !important;
-            height: 10% !important;
+            height: 11% !important;
             background: radial-gradient(circle, rgba(255, 240, 200, 0.55) 0%, rgba(255, 210, 120, 0.22) 45%, transparent 75%) !important;
             animation: pulseGlow2 4.0s ease-in-out infinite -2.6s !important;
         }}
 
-        /* Bulb 3 Glow: Grand Hero Center (x: 46.2%, y: 16.2%) */
+        /* Bulb 3 Glow: Grand Hero Center (x: 50.0%, y: 15.5%) */
         .glow-bulb-3 {{
-            left: 46.2% !important;
-            top: 16.2% !important;
+            left: 50.0% !important;
+            top: 15.5% !important;
             width: 44% !important;
             height: 19% !important;
             background: radial-gradient(circle, rgba(255, 255, 235, 0.7) 0%, rgba(255, 230, 150, 0.38) 40%, rgba(255, 190, 80, 0.16) 65%, transparent 85%) !important;
             animation: pulseGlow3 6.0s ease-in-out infinite 0s !important;
         }}
 
-        /* Bulb 4 Glow: Lower Center (x: 59.1%, y: 36.0%) */
+        /* Bulb 4 Glow: Upper Right (x: 81.9%, y: 16.9%) */
         .glow-bulb-4 {{
-            left: 59.1% !important;
-            top: 36.0% !important;
-            width: 18% !important;
-            height: 9% !important;
+            left: 81.9% !important;
+            top: 16.9% !important;
+            width: 24% !important;
+            height: 11% !important;
             background: radial-gradient(circle, rgba(255, 245, 210, 0.65) 0%, rgba(255, 220, 130, 0.28) 45%, transparent 75%) !important;
             animation: pulseGlow4 3.4s ease-in-out infinite -1.9s !important;
         }}
 
-        /* Bulb 5 Glow: Right Bulb (x: 82.6%, y: 19.1%) */
+        /* Bulb 5 Glow: Lower Right (x: 79.3%, y: 31.6%) */
         .glow-bulb-5 {{
-            left: 82.6% !important;
-            top: 19.1% !important;
-            width: 26% !important;
-            height: 12% !important;
+            left: 79.3% !important;
+            top: 31.6% !important;
+            width: 22% !important;
+            height: 11% !important;
             background: radial-gradient(circle, rgba(255, 245, 210, 0.6) 0%, rgba(255, 215, 130, 0.25) 45%, transparent 75%) !important;
             animation: pulseGlow5 5.2s ease-in-out infinite -3.3s !important;
         }}
@@ -1014,17 +1029,17 @@ def apply_login_background():
             100% {{ transform: translate(14px, -90px) scale(1); opacity: 0; }}
         }}
 
-        /* 2. THE HERO LOGIN FORM (Right side on desktop, centered on mobile) */
+        /* 2. THE HERO LOGIN FORM (Centered cleanly inside its UI Column) */
         [data-testid="stForm"] {{
-            width: 100vw !important;
-            min-height: 100vh !important;
-            max-width: 100vw !important;
-            margin: 0 !important;
-            padding: 2.5rem 2rem 2.5rem 50vw !important;
+            width: 100% !important;
+            max-width: 480px !important;
+            min-height: auto !important;
+            margin: 0 auto !important;
+            padding: 0 !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
-            justify-content: center !important;
+            justify-content: flex-start !important;
             border: none !important;
             border-radius: 0 !important;
             box-shadow: none !important;
@@ -1036,7 +1051,8 @@ def apply_login_background():
 
         /* Neutralize internal Streamlit form wrappers */
         [data-testid="stForm"] > div:first-child {{
-            width: min(500px, 94vw) !important;
+            width: 100% !important;
+            max-width: 480px !important;
             margin: 0 auto !important;
             padding: 0 !important;
             display: flex !important;
@@ -1044,19 +1060,19 @@ def apply_login_background():
             align-items: center !important;
         }}
 
-        /* 3. Title: PROJECT NOVELTY [ ANALYSER ] matching User Reference Image (Enlarged) */
+        /* 3. Title: PROJECT NOVELTY [ ANALYSER ] matching User Reference Image */
         .login-brand-title {{
             width: 100% !important;
-            max-width: 680px !important;
-            margin: 0 auto 2.2rem auto !important;
+            max-width: 480px !important;
+            margin: 0 auto 1.5rem auto !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
         }}
 
         .login-brand-hero-img {{
-            width: min(650px, 95vw) !important;
-            max-width: 100% !important;
+            width: 100% !important;
+            max-width: 440px !important;
             height: auto !important;
             display: block !important;
             margin: 0 auto !important;
@@ -1067,7 +1083,8 @@ def apply_login_background():
 
         /* 4. Action: LOGIN Submit Button (Positioned DOWN below Card) */
         [data-testid="stForm"] [data-testid="stFormSubmitButton"] {{
-            width: min(420px, 92vw) !important;
+            width: 100% !important;
+            max-width: 440px !important;
             margin: 1.4rem auto 0 auto !important;
             padding: 0 !important;
             display: flex !important;
@@ -1127,7 +1144,8 @@ def apply_login_background():
 
         /* 5. The Chalk Card Container (Containing ONLY USERNAME & PASSWORD) */
         [data-testid="stForm"] [data-testid="stVerticalBlockBorderWrapper"] {{
-            width: min(420px, 92vw) !important;
+            width: 100% !important;
+            max-width: 440px !important;
             border: 2px solid rgba(255, 255, 255, 0.95) !important;
             border-radius: 36px !important;
             background: rgba(22, 22, 28, 0.75) !important;
@@ -1296,7 +1314,7 @@ def apply_login_background():
             position: absolute !important;
             width: 48% !important;
             height: 20% !important;
-            top: 77.2% !important;
+            top: 80.0% !important;
             left: 48.6% !important;
             transform: translate(-50%, -50%) !important;
             border-radius: 50% !important;
@@ -1322,17 +1340,17 @@ def apply_login_background():
 
         .spark-b1 {{
             width: 6px; height: 6px;
-            left: 42%; top: 74%;
+            left: 42%; top: 76%;
             animation: sparkPulse1 3.2s ease-in-out infinite -0.6s !important;
         }}
         .spark-b2 {{
             width: 7px; height: 7px;
-            left: 55%; top: 79%;
+            left: 55%; top: 82%;
             animation: sparkPulse2 4.1s ease-in-out infinite -1.9s !important;
         }}
         .spark-b3 {{
             width: 5px; height: 5px;
-            left: 47%; top: 82%;
+            left: 47%; top: 85%;
             animation: sparkPulse1 3.7s ease-in-out infinite -2.4s !important;
         }}
 
@@ -1382,7 +1400,8 @@ def apply_login_background():
         }}
 
         /* STUDENT 1 and STUDENT 2 Buttons - Authentic Pill Capsules */
-        .demo-master-wrapper .stButton > button {{
+        .demo-student-container .stButton > button,
+        [data-testid="column"] .stButton > button {{
             width: 100% !important;
             height: 50px !important;
             min-height: 50px !important;
@@ -1404,7 +1423,8 @@ def apply_login_background():
             justify-content: center !important;
         }}
 
-        .demo-master-wrapper .stButton > button:hover {{
+        .demo-student-container .stButton > button:hover,
+        [data-testid="column"] .stButton > button:hover {{
             background: #ffffff !important;
             color: #0b0b0f !important;
             -webkit-text-fill-color: #0b0b0f !important;
@@ -1414,15 +1434,23 @@ def apply_login_background():
         }}
 
         @media (max-width: 920px) {{
-            .chalk-bulbs-flow-stage {{
-                opacity: 0.12 !important;
+            [data-testid="stHorizontalBlock"]:has(.chalk-balloon-neural-stage),
+            .main .block-container > div > div > [data-testid="stHorizontalBlock"] {{
+                flex-direction: column !important;
+                width: 96vw !important;
+                margin: 1rem auto !important;
+            }}
+            .chalk-balloon-neural-stage {{
+                max-width: 340px !important;
+                margin: 1rem auto 1.5rem auto !important;
             }}
             [data-testid="stForm"] {{
-                padding: 3.5rem 1.5rem 2.5rem 1.5rem !important;
+                padding: 0 !important;
+                width: 100% !important;
+                max-width: 440px !important;
             }}
-            .demo-master-wrapper {{
-                width: 92vw !important;
-                margin: 2.5rem auto 4rem auto !important;
+            .demo-capsule-header-wrapper {{
+                margin-top: 1.5rem !important;
             }}
         }}
 
@@ -1775,7 +1803,6 @@ def show_login_page():
     uri_title = get_asset_data_uri("assets/project_novelty_title_perfect.png")
     uri_connected = get_asset_data_uri("assets/chalk_bulbs_and_brain_connected.png")
     
-    st.markdown('<div class="login-layout-master-container">', unsafe_allow_html=True)
     col_art_side, col_ui_side = st.columns([1, 1.15], gap="large")
     
     with col_art_side:
@@ -1856,7 +1883,6 @@ def show_login_page():
         
         col_s1, col_s2 = st.columns(2, gap="medium")
         with col_s1:
-            st.markdown('<div class="demo-student-container">', unsafe_allow_html=True)
             if st.button("STUDENT 1", key="quick_login_student1", use_container_width=True):
                 if authenticate_user("john@university.edu", "password123"):
                     st.session_state.current_page = "dashboard"
@@ -1879,11 +1905,9 @@ def show_login_page():
                     <span class="active-dot">●</span> 4 Pre-analyzed Projects Loaded
                 </div>
             </div>
-            </div>
             """, unsafe_allow_html=True)
             
         with col_s2:
-            st.markdown('<div class="demo-student-container">', unsafe_allow_html=True)
             if st.button("STUDENT 2", key="quick_login_student2", use_container_width=True):
                 if authenticate_user("jane_smith", "password123"):
                     st.session_state.current_page = "dashboard"
@@ -1906,10 +1930,7 @@ def show_login_page():
                     <span class="active-dot">●</span> 2 Active Research Projects Loaded
                 </div>
             </div>
-            </div>
             """, unsafe_allow_html=True)
-            
-    st.markdown('</div>', unsafe_allow_html=True)
 
 def show_dashboard():
     """Display the student dashboard matching the chalkboard pill mockup."""
