@@ -809,7 +809,7 @@ def apply_login_background():
             margin: 0 !important;
             padding: 0 !important;
             background-color: #121010 !important;
-            background: radial-gradient(circle at 65% 45%, #181514 0%, #100e0e 85%) !important;
+            background: radial-gradient(circle at 50% 50%, #161414 0%, #100e0e 85%) !important;
         }}
 
         [data-testid="stHeader"],
@@ -819,15 +819,15 @@ def apply_login_background():
         }}
 
         .main .block-container {{
-            max-width: 1100px !important;
-            width: min(1100px, 95vw) !important;
+            max-width: 980px !important;
+            width: min(980px, 95vw) !important;
             min-height: 100vh !important;
             margin: 0 auto !important;
-            padding: 1.5rem 1rem 4rem 1rem !important;
+            padding: 1rem 1rem 3rem 1rem !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
-            justify-content: center !important;
+            justify-content: flex-start !important;
             box-sizing: border-box !important;
         }}
 
@@ -849,50 +849,62 @@ def apply_login_background():
             overflow: hidden !important;
         }}
 
-        /* Outer two-column container */
+        /* Horizontal column blocks */
         .main .block-container > div:has([data-testid="column"]) > [data-testid="stHorizontalBlock"],
         .main .block-container > [data-testid="stHorizontalBlock"] {{
             width: 100% !important;
-            max-width: 1080px !important;
+            max-width: 960px !important;
             margin: 0 auto !important;
-            align-items: center !important;
+            align-items: flex-start !important;
             justify-content: center !important;
-            gap: 2.5rem !important;
+            gap: 2rem !important;
         }}
 
-        /* Left Side: Hanging Bulb Stage */
-        .hanging-bulb-stage {{
+        /* TOP-LEFT: Hanging Bulbs Stage */
+        .login-hanging-stage {{
             width: 100% !important;
             display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
-            justify-content: flex-start !important;
+            align-items: flex-start !important;
+            justify-content: center !important;
+            margin-top: -1rem !important;
             padding: 0 !important;
-            margin: -2.5rem 0 0 0 !important;
         }}
 
-        .hanging-bulb-img {{
+        .login-hanging-img {{
             width: 100% !important;
-            max-width: 260px !important;
+            max-width: 250px !important;
             height: auto !important;
             display: block !important;
             margin: 0 auto !important;
-            filter: drop-shadow(0 0 35px rgba(135, 106, 66, 0.45)) !important;
+            filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.12)) !important;
             user-select: none !important;
             pointer-events: none !important;
-            transform-origin: top center !important;
-            animation: gentleBulbSway 8s ease-in-out infinite alternate !important;
         }}
 
-        @keyframes gentleBulbSway {{
-            0% {{ transform: rotate(-1.2deg); }}
-            100% {{ transform: rotate(1.2deg); }}
+        /* TOP-RIGHT: Title & Login Form Stage */
+        .login-brand-title {{
+            width: 100% !important;
+            max-width: 420px !important;
+            margin: 0.5rem auto 1.5rem auto !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
         }}
 
-        /* Right Side: Login Form Stage */
+        .login-brand-hero-img {{
+            width: 100% !important;
+            max-width: 390px !important;
+            height: auto !important;
+            display: block !important;
+            margin: 0 auto !important;
+            filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.8)) !important;
+            user-select: none !important;
+            pointer-events: none !important;
+        }}
+
         [data-testid="stForm"] {{
             width: 100% !important;
-            max-width: 440px !important;
+            max-width: 400px !important;
             min-height: auto !important;
             margin: 0 auto !important;
             padding: 0 !important;
@@ -911,7 +923,7 @@ def apply_login_background():
 
         [data-testid="stForm"] > div:first-child {{
             width: 100% !important;
-            max-width: 440px !important;
+            max-width: 400px !important;
             margin: 0 auto !important;
             padding: 0 !important;
             display: flex !important;
@@ -919,49 +931,14 @@ def apply_login_background():
             align-items: center !important;
         }}
 
-        /* Title: PROJECT NOVELTY [ ANALYSER ] matching User Mockup */
-        .login-brand-title {{
-            width: 100% !important;
-            max-width: 440px !important;
-            margin: 0 auto 0.4rem auto !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-        }}
-
-        .login-brand-hero-img {{
-            width: 100% !important;
-            max-width: 420px !important;
-            height: auto !important;
-            display: block !important;
-            margin: 0 auto !important;
-            filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.7)) !important;
-            user-select: none !important;
-            pointer-events: none !important;
-        }}
-
-        /* Subtitle: LOGIN heading text */
-        .login-title-heading {{
-            width: 100% !important;
-            max-width: 440px !important;
-            text-align: center !important;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-            font-size: 1.45rem !important;
-            font-weight: 400 !important;
-            letter-spacing: 4px !important;
-            color: #ffffff !important;
-            text-transform: uppercase !important;
-            margin: 0.5rem auto 1.35rem auto !important;
-        }}
-
         /* Card Container (White Border, Rounded 36px, Transparent Fill) */
         [data-testid="stForm"] [data-testid="stVerticalBlockBorderWrapper"] {{
             width: 100% !important;
-            max-width: 440px !important;
+            max-width: 380px !important;
             border: 2px solid rgba(255, 255, 255, 0.95) !important;
             border-radius: 36px !important;
             background: transparent !important;
-            padding: 26px 22px !important;
+            padding: 24px 20px !important;
             margin: 0 auto !important;
             box-shadow: none !important;
             box-sizing: border-box !important;
@@ -972,14 +949,14 @@ def apply_login_background():
             background: transparent !important;
             display: flex !important;
             flex-direction: column !important;
-            gap: 16px !important;
+            gap: 14px !important;
             padding: 0 !important;
         }}
 
         /* Pill Inputs: USERNAME & PASSWORD */
         [data-testid="stForm"] [data-testid="stTextInput"] {{
             width: 100% !important;
-            height: 56px !important;
+            height: 52px !important;
             margin: 0 !important;
             padding: 0 !important;
             background: transparent !important;
@@ -999,13 +976,13 @@ def apply_login_background():
 
         [data-testid="stForm"] [data-testid="stTextInputRootElement"] {{
             width: 100% !important;
-            height: 56px !important;
-            min-height: 56px !important;
-            max-height: 56px !important;
+            height: 52px !important;
+            min-height: 52px !important;
+            max-height: 52px !important;
             border: 1.5px solid rgba(255, 255, 255, 0.45) !important;
             border-radius: 9999px !important;
             background: #464545 !important;
-            padding: 0 1.6rem !important;
+            padding: 0 1.5rem !important;
             box-sizing: border-box !important;
             box-shadow: none !important;
             outline: none !important;
@@ -1016,7 +993,7 @@ def apply_login_background():
 
         [data-testid="stForm"] [data-testid="stTextInputRootElement"]:focus-within {{
             border-color: #ffffff !important;
-            box-shadow: 0 0 16px rgba(255, 255, 255, 0.35) !important;
+            box-shadow: 0 0 14px rgba(255, 255, 255, 0.35) !important;
             background: #504f4f !important;
         }}
 
@@ -1027,9 +1004,9 @@ def apply_login_background():
             background-color: transparent !important;
             color: #ffffff !important;
             -webkit-text-fill-color: #ffffff !important;
-            font-size: 1rem !important;
+            font-size: 0.95rem !important;
             font-weight: 400 !important;
-            letter-spacing: 1.5px !important;
+            letter-spacing: 2px !important;
             border: none !important;
             outline: none !important;
             box-shadow: none !important;
@@ -1038,11 +1015,11 @@ def apply_login_background():
         }}
 
         [data-testid="stForm"] [data-testid="stTextInput"] input::placeholder {{
-            color: rgba(255, 255, 255, 0.75) !important;
-            -webkit-text-fill-color: rgba(255, 255, 255, 0.75) !important;
+            color: rgba(255, 255, 255, 0.8) !important;
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.8) !important;
             opacity: 1 !important;
             font-size: 0.95rem !important;
-            letter-spacing: 2.5px !important;
+            letter-spacing: 2px !important;
             text-transform: uppercase !important;
             font-weight: 400 !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
@@ -1060,10 +1037,10 @@ def apply_login_background():
             color: #ffffff !important;
         }}
 
-        /* Action: Centered Pill LOGIN Submit Button */
+        /* Action: Centered Pure Text LOGIN Button */
         [data-testid="stForm"] [data-testid="stFormSubmitButton"] {{
             width: 100% !important;
-            margin: 1.5rem auto 0 auto !important;
+            margin: 1.25rem auto 0 auto !important;
             padding: 0 !important;
             display: flex !important;
             align-items: center !important;
@@ -1071,26 +1048,24 @@ def apply_login_background():
         }}
 
         [data-testid="stForm"] [data-testid="stFormSubmitButton"] > button {{
-            width: 220px !important;
-            min-width: 220px !important;
-            max-width: 220px !important;
-            height: 52px !important;
-            min-height: 52px !important;
-            max-height: 52px !important;
-            background: #3f351e !important;
-            background-color: #3f351e !important;
-            border: 2px solid #ffffff !important;
-            border-radius: 9999px !important;
+            width: auto !important;
+            min-width: 160px !important;
+            height: 48px !important;
+            min-height: 48px !important;
+            max-height: 48px !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
             color: #ffffff !important;
             -webkit-text-fill-color: #ffffff !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-            font-size: 1.15rem !important;
-            font-weight: 500 !important;
-            letter-spacing: 3px !important;
+            font-size: 1.35rem !important;
+            font-weight: 300 !important;
+            letter-spacing: 5px !important;
             text-transform: uppercase !important;
             cursor: pointer !important;
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5) !important;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            transition: all 0.25s ease !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
@@ -1099,15 +1074,17 @@ def apply_login_background():
         }}
 
         [data-testid="stForm"] [data-testid="stFormSubmitButton"] > button:hover {{
-            background: #524527 !important;
-            background-color: #524527 !important;
-            border-color: #ffffff !important;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 0 4px 18px rgba(0, 0, 0, 0.7) !important;
-            transform: translateY(-2px) !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            border: none !important;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.7) !important;
+            transform: scale(1.04) !important;
         }}
 
         [data-testid="stForm"] [data-testid="stFormSubmitButton"] > button:active {{
-            transform: translateY(1px) scale(0.99) !important;
+            transform: scale(0.98) !important;
         }}
 
         [data-testid="stForm"] [data-testid="stFormSubmitButton"] p {{
@@ -1123,7 +1100,7 @@ def apply_login_background():
 
         /* Error Alert */
         [data-testid="stForm"] div[data-testid="stAlert"] {{
-            width: min(390px, 92vw) !important;
+            width: min(380px, 92vw) !important;
             margin: 1.25rem auto 0 auto !important;
             background: rgba(185, 28, 28, 0.92) !important;
             color: #ffffff !important;
@@ -1150,181 +1127,94 @@ def apply_login_background():
             fill: #ffffff !important;
         }}
 
-        /* Demo Section */
-        .demo-master-wrapper {{
+        /* BOTTOM-LEFT: Demo Accounts Stage */
+        .login-demo-stage {{
             width: 100% !important;
-            max-width: 440px !important;
-            margin: 2rem auto 0 auto !important;
-            padding: 0 !important;
+            max-width: 320px !important;
+            margin: 1.5rem auto 0.75rem auto !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
-        }}
-
-        .demo-capsule-header-wrapper {{
-            width: 100% !important;
-            display: flex !important;
-            align-items: center !important;
             justify-content: center !important;
-            margin: 0 auto 1rem auto !important;
         }}
 
-        .demo-capsule-badge {{
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            padding: 6px 28px !important;
-            border: 1.5px solid rgba(255, 255, 255, 0.75) !important;
-            border-radius: 9999px !important;
-            background: #252220 !important;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
-        }}
-
-        .demo-capsule-badge span {{
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-            font-size: 0.95rem !important;
-            font-weight: 500 !important;
-            color: #ffffff !important;
-            letter-spacing: 1px !important;
-            text-transform: uppercase !important;
-        }}
-
-        /* Inner Demo Columns */
-        [data-testid="column"] [data-testid="stHorizontalBlock"] {{
+        .login-demo-badge-img {{
             width: 100% !important;
-            max-width: 440px !important;
+            max-width: 290px !important;
+            height: auto !important;
+            display: block !important;
             margin: 0 auto !important;
-            gap: 0.85rem !important;
+            user-select: none !important;
+            pointer-events: none !important;
         }}
 
         /* STUDENT 1 and STUDENT 2 Buttons */
         .main .block-container .stButton > button {{
             width: 100% !important;
-            height: 44px !important;
-            min-height: 44px !important;
-            border: 1.5px solid rgba(255, 255, 255, 0.7) !important;
+            height: 42px !important;
+            min-height: 42px !important;
+            background: #242222 !important;
+            background-color: #242222 !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.55) !important;
             border-radius: 9999px !important;
-            background: #3f351e !important;
             color: #ffffff !important;
             -webkit-text-fill-color: #ffffff !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-            font-size: 0.88rem !important;
-            font-weight: 600 !important;
-            letter-spacing: 2px !important;
+            font-size: 0.82rem !important;
+            font-weight: 500 !important;
+            letter-spacing: 1.5px !important;
             text-transform: uppercase !important;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            box-shadow: none !important;
+            transition: all 0.2s ease !important;
             cursor: pointer !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
+            padding: 0 !important;
         }}
 
         .main .block-container .stButton > button:hover {{
-            background: #524527 !important;
-            color: #ffffff !important;
-            -webkit-text-fill-color: #ffffff !important;
+            background: #333030 !important;
+            background-color: #333030 !important;
             border-color: #ffffff !important;
-            box-shadow: 0 0 16px rgba(255, 255, 255, 0.4), 0 4px 16px rgba(0, 0, 0, 0.6) !important;
-            transform: translateY(-2px) !important;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3) !important;
+            transform: translateY(-1px) !important;
         }}
 
-        /* Student Credential Pill Card */
-        .student-credential-pill-card {{
-            background: #201e1d !important;
-            border: 1.5px solid rgba(255, 255, 255, 0.2) !important;
-            border-radius: 18px !important;
-            padding: 1rem 1.15rem !important;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5) !important;
+        .main .block-container .stButton > button:active {{
+            transform: translateY(1px) !important;
+        }}
+
+        /* BOTTOM-RIGHT: Upright Bulb Stage */
+        .login-upright-stage {{
+            width: 100% !important;
             display: flex !important;
-            flex-direction: column !important;
-            gap: 0.5rem !important;
-            box-sizing: border-box !important;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+            align-items: flex-start !important;
+            justify-content: center !important;
+            margin-top: 0.5rem !important;
+            padding: 0 !important;
         }}
 
-        .student-credential-pill-card:hover {{
-            border-color: rgba(255, 255, 255, 0.4) !important;
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.7), 0 0 12px rgba(255, 255, 255, 0.15) !important;
-        }}
-
-        .student-card-header {{
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
-            padding-bottom: 0.35rem !important;
-            margin-bottom: 0.2rem !important;
-        }}
-
-        .student-name {{
-            font-size: 0.98rem !important;
-            font-weight: 600 !important;
-            color: #ffffff !important;
-            letter-spacing: 0.5px !important;
-        }}
-
-        .student-badge-role {{
-            font-size: 0.62rem !important;
-            font-weight: 700 !important;
-            color: #d4a373 !important;
-            background: rgba(212, 163, 115, 0.15) !important;
-            border: 1px solid rgba(212, 163, 115, 0.35) !important;
-            padding: 2px 7px !important;
-            border-radius: 9999px !important;
-            letter-spacing: 0.8px !important;
-        }}
-
-        .student-credential-row {{
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-            gap: 0.5rem !important;
-            font-size: 0.82rem !important;
-        }}
-
-        .cred-label {{
-            color: #94a3b8 !important;
-            font-size: 0.7rem !important;
-            font-weight: 600 !important;
-            letter-spacing: 1px !important;
-        }}
-
-        .cred-val {{
-            color: #ffffff !important;
-            background: #2b2827 !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            border-radius: 6px !important;
-            padding: 2px 7px !important;
-            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace !important;
-            font-size: 0.8rem !important;
-            letter-spacing: 0.5px !important;
-        }}
-
-        .student-card-footer {{
-            margin-top: 0.2rem !important;
-            padding-top: 0.35rem !important;
-            border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-            color: #cbd5e1 !important;
-            font-size: 0.72rem !important;
-            display: flex !important;
-            align-items: center !important;
-            gap: 0.4rem !important;
-        }}
-
-        .student-card-footer .active-dot {{
-            color: #4ade80 !important;
-            font-size: 0.65rem !important;
+        .login-upright-img {{
+            width: 100% !important;
+            max-width: 215px !important;
+            height: auto !important;
+            display: block !important;
+            margin: 0 auto !important;
+            filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.12)) !important;
+            user-select: none !important;
+            pointer-events: none !important;
         }}
 
         /* Responsive */
-        @media (max-width: 800px) {{
-            .hanging-bulb-stage {{
+        @media (max-width: 768px) {{
+            .login-hanging-stage,
+            .login-upright-stage {{
                 display: none !important;
             }}
             .main .block-container {{
-                max-width: 520px !important;
-                padding-top: 2rem !important;
+                max-width: 480px !important;
+                padding-top: 1.5rem !important;
             }}
         }}
     </style>
@@ -1588,29 +1478,31 @@ def logout():
 # ============================================================================
 
 def show_login_page():
-    """Display the clean chalkboard login page with hanging minimalist bulb and pill card matching mockup."""
+    """Display the clean chalkboard login page matching the exact user mockup."""
     apply_custom_css()
     apply_login_background()
     
-    uri_bulb = get_asset_data_uri("assets/hanging_bulb_minimal.png")
+    uri_hanging_bulbs = get_asset_data_uri("assets/login_hanging_bulbs.png")
     uri_title = get_asset_data_uri("assets/project_novelty_title_perfect.png")
+    uri_demo_badge = get_asset_data_uri("assets/login_demo_badge.png")
+    uri_upright_bulb = get_asset_data_uri("assets/login_upright_bulb.png")
     
-    col_art, col_ui = st.columns([1, 1.35], gap="large")
+    # ROW 1 (UPPER): Hanging bulbs on Left, Title & Login Form on Right
+    col_top_left, col_top_right = st.columns([1, 1.25], gap="large")
     
-    with col_art:
+    with col_top_left:
         st.markdown(f"""
-        <div class="hanging-bulb-stage">
-            <img src="{uri_bulb}" class="hanging-bulb-img" alt="Hanging Lightbulb" />
+        <div class="login-hanging-stage">
+            <img src="{uri_hanging_bulbs}" class="login-hanging-img" alt="Hanging Bulbs" />
         </div>
         """, unsafe_allow_html=True)
         
-    with col_ui:
+    with col_top_right:
         with st.form("login_form"):
             st.markdown(f"""
             <div class="login-brand-title">
                 <img src="{uri_title}" class="login-brand-hero-img" alt="PROJECT NOVELTY [ ANALYSER ]" />
             </div>
-            <div class="login-title-heading">LOGIN</div>
             """, unsafe_allow_html=True)
             
             with st.container(border=True):
@@ -1646,66 +1538,38 @@ def show_login_page():
                             "MySQL login is unavailable, so only bundled demo credentials "
                             "can be used right now. Check MySQL configuration."
                         )
-        
-        # Demo Accounts Section Centered Below
-        st.markdown("""
-        <div class="demo-master-wrapper">
-            <div class="demo-capsule-header-wrapper">
-                <div class="demo-capsule-badge"><span>Demo Accounts</span></div>
-            </div>
+                        
+    # ROW 2 (LOWER): Demo Accounts on Left, Upright Bulb on Right
+    col_bot_left, col_bot_right = st.columns([1, 1.25], gap="large")
+    
+    with col_bot_left:
+        st.markdown(f"""
+        <div class="login-demo-stage">
+            <img src="{uri_demo_badge}" class="login-demo-badge-img" alt="Demo Accounts" />
         </div>
         """, unsafe_allow_html=True)
         
-        col_s1, col_s2 = st.columns(2, gap="medium")
-        with col_s1:
-            if st.button("STUDENT 1", key="quick_login_student1", use_container_width=True):
-                if authenticate_user("john@university.edu", "password123"):
-                    st.session_state.current_page = "dashboard"
-                    st.rerun()
-            st.markdown("""
-            <div class="student-credential-pill-card">
-                <div class="student-card-header">
-                    <span class="student-name">John Doe</span>
-                    <span class="student-badge-role">RESEARCHER</span>
-                </div>
-                <div class="student-credential-row">
-                    <span class="cred-label">EMAIL</span>
-                    <code class="cred-val">john@university.edu</code>
-                </div>
-                <div class="student-credential-row">
-                    <span class="cred-label">PASSWORD</span>
-                    <code class="cred-val">password123</code>
-                </div>
-                <div class="student-card-footer">
-                    <span class="active-dot">●</span> 4 Pre-analyzed Projects Loaded
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-            
-        with col_s2:
-            if st.button("STUDENT 2", key="quick_login_student2", use_container_width=True):
-                if authenticate_user("jane_smith", "password123"):
-                    st.session_state.current_page = "dashboard"
-                    st.rerun()
-            st.markdown("""
-            <div class="student-credential-pill-card">
-                <div class="student-card-header">
-                    <span class="student-name">Jane Smith</span>
-                    <span class="student-badge-role">STUDENT</span>
-                </div>
-                <div class="student-credential-row">
-                    <span class="cred-label">USERNAME</span>
-                    <code class="cred-val">jane_smith</code>
-                </div>
-                <div class="student-credential-row">
-                    <span class="cred-label">PASSWORD</span>
-                    <code class="cred-val">password123</code>
-                </div>
-                <div class="student-card-footer">
-                    <span class="active-dot">●</span> 2 Active Research Projects Loaded
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+        # Center the two student pill buttons underneath the badge
+        _, col_btn_center, _ = st.columns([0.08, 0.84, 0.08])
+        with col_btn_center:
+            col_s1, col_s2 = st.columns(2, gap="small")
+            with col_s1:
+                if st.button("STUDENT 1", key="quick_login_student1", use_container_width=True):
+                    if authenticate_user("john@university.edu", "password123"):
+                        st.session_state.current_page = "dashboard"
+                        st.rerun()
+            with col_s2:
+                if st.button("STUDENT 2", key="quick_login_student2", use_container_width=True):
+                    if authenticate_user("jane_smith", "password123"):
+                        st.session_state.current_page = "dashboard"
+                        st.rerun()
+                        
+    with col_bot_right:
+        st.markdown(f"""
+        <div class="login-upright-stage">
+            <img src="{uri_upright_bulb}" class="login-upright-img" alt="Lightbulb" />
+        </div>
+        """, unsafe_allow_html=True)
 
 def show_dashboard():
     """Display the student dashboard matching the chalkboard pill mockup."""
