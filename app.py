@@ -819,11 +819,11 @@ def apply_login_background():
         }}
 
         .main .block-container {{
-            max-width: 980px !important;
-            width: min(980px, 95vw) !important;
+            max-width: 1060px !important;
+            width: min(1060px, 95vw) !important;
             min-height: 100vh !important;
             margin: 0 auto !important;
-            padding: 1rem 1rem 3rem 1rem !important;
+            padding: 0.75rem 1rem 2.5rem 1rem !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
@@ -853,11 +853,11 @@ def apply_login_background():
         .main .block-container > div:has([data-testid="column"]) > [data-testid="stHorizontalBlock"],
         .main .block-container > [data-testid="stHorizontalBlock"] {{
             width: 100% !important;
-            max-width: 960px !important;
+            max-width: 1040px !important;
             margin: 0 auto !important;
             align-items: flex-start !important;
             justify-content: center !important;
-            gap: 2rem !important;
+            gap: 1.5rem !important;
         }}
 
         /* TOP-LEFT: Hanging Bulbs Stage */
@@ -872,7 +872,7 @@ def apply_login_background():
 
         .login-hanging-img {{
             width: 100% !important;
-            max-width: 250px !important;
+            max-width: 440px !important;
             height: auto !important;
             display: block !important;
             margin: 0 auto !important;
@@ -1131,7 +1131,7 @@ def apply_login_background():
         .login-demo-stage {{
             width: 100% !important;
             max-width: 320px !important;
-            margin: 1.5rem auto 0.75rem auto !important;
+            margin: 0.5rem auto 0.5rem auto !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
@@ -1191,13 +1191,13 @@ def apply_login_background():
             display: flex !important;
             align-items: flex-start !important;
             justify-content: center !important;
-            margin-top: 0.5rem !important;
+            margin-top: 0 !important;
             padding: 0 !important;
         }}
 
         .login-upright-img {{
             width: 100% !important;
-            max-width: 215px !important;
+            max-width: 225px !important;
             height: auto !important;
             display: block !important;
             margin: 0 auto !important;
@@ -1488,7 +1488,7 @@ def show_login_page():
     uri_upright_bulb = get_asset_data_uri("assets/login_upright_bulb.png")
     
     # ROW 1 (UPPER): Hanging bulbs on Left, Title & Login Form on Right
-    col_top_left, col_top_right = st.columns([1, 1.25], gap="large")
+    col_top_left, col_top_right = st.columns([1.1, 1.15], gap="large")
     
     with col_top_left:
         st.markdown(f"""
@@ -1540,7 +1540,7 @@ def show_login_page():
                         )
                         
     # ROW 2 (LOWER): Demo Accounts on Left, Upright Bulb on Right
-    col_bot_left, col_bot_right = st.columns([1, 1.25], gap="large")
+    col_bot_left, col_bot_right = st.columns([1.1, 1.15], gap="large")
     
     with col_bot_left:
         st.markdown(f"""
