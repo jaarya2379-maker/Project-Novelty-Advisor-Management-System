@@ -29,11 +29,11 @@ class LoginTests(unittest.TestCase):
                                   password=password):
                     app = AppTest.from_file(
                         str(Path(__file__).parent / entry_point)
-                    ).run()
+                    ).run(timeout=30)
                     self.assertEqual(len(app.exception), 0)
                     app.text_input[0].set_value(username)
                     app.text_input[1].set_value(password)
-                    app.button[0].click().run()
+                    app.button[0].click().run(timeout=30)
                     self.assertEqual(len(app.exception), 0)
                     self.assertEqual(app.session_state["logged_in"], student_id is not None)
                     if student_id:

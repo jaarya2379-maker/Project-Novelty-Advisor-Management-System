@@ -817,9 +817,12 @@ def apply_login_background():
         [data-testid="stHeader"],
         [data-testid="stAppHeader"],
         .stAppHeader,
+        [data-testid="stAppToolbar"],
+        .stAppToolbar,
+        [data-testid="stToolbar"],
+        .stToolbar,
         [data-testid="stDecoration"],
         .stDecoration,
-        [data-testid="stToolbar"],
         [data-testid="stStatusWidget"],
         [data-testid="stSidebar"],
         footer {{
@@ -835,14 +838,20 @@ def apply_login_background():
         }}
 
         /* 3. Flush top boundary - Zero out top padding on all Streamlit containers */
-        .main,
+        .stApp,
+        [data-testid="stApp"],
+        .stAppViewContainer,
+        [data-testid="stAppViewContainer"],
+        section.main,
+        section.stMain,
         [data-testid="stMain"],
-        section[data-testid="stMain"],
+        .main,
         .main .block-container,
         [data-testid="stMainBlockContainer"],
         .stMainBlockContainer,
         [data-testid="stAppViewBlockContainer"],
-        div[data-testid="stAppViewContainer"] > section {{
+        div[data-testid="stAppViewContainer"] > section,
+        div[data-testid="stAppViewContainer"] > section > div {{
             padding-top: 0 !important;
             margin-top: 0 !important;
         }}
@@ -863,6 +872,22 @@ def apply_login_background():
             align-items: center !important;
             justify-content: flex-start !important;
             box-sizing: border-box !important;
+        }}
+
+        /* 4. Allow visible overflow so cords are NEVER clipped */
+        [data-testid="column"],
+        div[data-testid="stVerticalBlock"],
+        div[data-testid="stHorizontalBlock"],
+        div[data-testid="stElementContainer"],
+        .element-container,
+        .stMarkdown,
+        [data-testid="stMainBlockContainer"],
+        .stMainBlockContainer,
+        .block-container,
+        section.main,
+        section.stMain,
+        [data-testid="stMain"] {{
+            overflow: visible !important;
         }}
 
         /* Completely suppress Streamlit's "Press Enter to submit form" tooltip */
@@ -892,6 +917,7 @@ def apply_login_background():
             align-items: flex-start !important;
             justify-content: center !important;
             gap: 1.5rem !important;
+            overflow: visible !important;
         }}
 
         /* TOP-LEFT: Hanging Bulbs Stage - Hang directly from top ceiling */
@@ -900,7 +926,7 @@ def apply_login_background():
             display: flex !important;
             align-items: flex-start !important;
             justify-content: center !important;
-            margin-top: -3.5rem !important;
+            margin-top: -300px !important;
             padding: 0 !important;
             overflow: visible !important;
         }}
@@ -920,7 +946,7 @@ def apply_login_background():
         .login-brand-title {{
             width: 100% !important;
             max-width: 420px !important;
-            margin: 1.5rem auto 1.5rem auto !important;
+            margin: 2.2rem auto 1.5rem auto !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
@@ -1514,7 +1540,6 @@ def logout():
 
 def show_login_page():
     """Display the clean chalkboard login page matching the exact user mockup."""
-    apply_custom_css()
     apply_login_background()
     
     uri_hanging_bulbs = get_asset_data_uri("assets/login_hanging_bulbs.png")
