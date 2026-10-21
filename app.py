@@ -1259,7 +1259,7 @@ def apply_login_background():
 
         .login-upright-img {{
             width: 100% !important;
-            max-width: 185px !important;
+            max-width: 240px !important;
             height: auto !important;
             display: block !important;
             margin: 0 auto !important;
