@@ -926,14 +926,14 @@ def apply_login_background():
             display: flex !important;
             align-items: flex-start !important;
             justify-content: center !important;
-            margin-top: -300px !important;
+            margin-top: -35px !important;
             padding: 0 !important;
             overflow: visible !important;
         }}
 
         .login-hanging-img {{
             width: 100% !important;
-            max-width: 440px !important;
+            max-width: 350px !important;
             height: auto !important;
             display: block !important;
             margin: 0 auto !important;
