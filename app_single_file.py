@@ -812,18 +812,52 @@ def apply_login_background():
             background: radial-gradient(circle at 50% 50%, #161414 0%, #100e0e 85%) !important;
         }}
 
+        /* 2. Suppress Streamlit Header, Toolbars, and Decorations */
+        header,
         [data-testid="stHeader"],
+        [data-testid="stAppHeader"],
+        .stAppHeader,
+        [data-testid="stDecoration"],
+        .stDecoration,
+        [data-testid="stToolbar"],
+        [data-testid="stStatusWidget"],
         [data-testid="stSidebar"],
         footer {{
             display: none !important;
+            height: 0 !important;
+            min-height: 0 !important;
+            max-height: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
         }}
 
-        .main .block-container {{
+        /* 3. Flush top boundary - Zero out top padding on all Streamlit containers */
+        .main,
+        [data-testid="stMain"],
+        section[data-testid="stMain"],
+        .main .block-container,
+        [data-testid="stMainBlockContainer"],
+        .stMainBlockContainer,
+        [data-testid="stAppViewBlockContainer"],
+        div[data-testid="stAppViewContainer"] > section {{
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+        }}
+
+        .main .block-container,
+        [data-testid="stMainBlockContainer"],
+        .stMainBlockContainer {{
             max-width: 1060px !important;
             width: min(1060px, 95vw) !important;
             min-height: 100vh !important;
             margin: 0 auto !important;
-            padding: 0.75rem 1rem 2.5rem 1rem !important;
+            padding-top: 0 !important;
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+            padding-bottom: 2.5rem !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
@@ -860,14 +894,15 @@ def apply_login_background():
             gap: 1.5rem !important;
         }}
 
-        /* TOP-LEFT: Hanging Bulbs Stage */
+        /* TOP-LEFT: Hanging Bulbs Stage - Hang directly from top ceiling */
         .login-hanging-stage {{
             width: 100% !important;
             display: flex !important;
             align-items: flex-start !important;
             justify-content: center !important;
-            margin-top: -1rem !important;
+            margin-top: -3.5rem !important;
             padding: 0 !important;
+            overflow: visible !important;
         }}
 
         .login-hanging-img {{
@@ -885,7 +920,7 @@ def apply_login_background():
         .login-brand-title {{
             width: 100% !important;
             max-width: 420px !important;
-            margin: 0.5rem auto 1.5rem auto !important;
+            margin: 1.5rem auto 1.5rem auto !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
