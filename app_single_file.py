@@ -1191,8 +1191,8 @@ def apply_login_background():
         /* BOTTOM-LEFT: Demo Accounts Stage */
         .login-demo-stage {{
             width: 100% !important;
-            max-width: 320px !important;
-            margin: 0.5rem auto 0.5rem auto !important;
+            max-width: 260px !important;
+            margin: 0.35rem auto 0.35rem auto !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
@@ -1201,7 +1201,7 @@ def apply_login_background():
 
         .login-demo-badge-img {{
             width: 100% !important;
-            max-width: 290px !important;
+            max-width: 215px !important;
             height: auto !important;
             display: block !important;
             margin: 0 auto !important;
@@ -1212,18 +1212,19 @@ def apply_login_background():
         /* STUDENT 1 and STUDENT 2 Buttons */
         .main .block-container .stButton > button {{
             width: 100% !important;
-            height: 42px !important;
-            min-height: 42px !important;
-            background: #242222 !important;
-            background-color: #242222 !important;
-            border: 1.5px solid rgba(255, 255, 255, 0.55) !important;
+            height: 32px !important;
+            min-height: 32px !important;
+            max-height: 32px !important;
+            background: #201e1e !important;
+            background-color: #201e1e !important;
+            border: 1px solid rgba(255, 255, 255, 0.6) !important;
             border-radius: 9999px !important;
             color: #ffffff !important;
             -webkit-text-fill-color: #ffffff !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-            font-size: 0.82rem !important;
+            font-size: 0.74rem !important;
             font-weight: 500 !important;
-            letter-spacing: 1.5px !important;
+            letter-spacing: 1px !important;
             text-transform: uppercase !important;
             box-shadow: none !important;
             transition: all 0.2s ease !important;
@@ -1235,10 +1236,10 @@ def apply_login_background():
         }}
 
         .main .block-container .stButton > button:hover {{
-            background: #333030 !important;
-            background-color: #333030 !important;
+            background: #2f2c2c !important;
+            background-color: #2f2c2c !important;
             border-color: #ffffff !important;
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.35) !important;
             transform: translateY(-1px) !important;
         }}
 
@@ -1258,7 +1259,7 @@ def apply_login_background():
 
         .login-upright-img {{
             width: 100% !important;
-            max-width: 225px !important;
+            max-width: 185px !important;
             height: auto !important;
             display: block !important;
             margin: 0 auto !important;
@@ -1610,7 +1611,7 @@ def show_login_page():
         """, unsafe_allow_html=True)
         
         # Center the two student pill buttons underneath the badge
-        _, col_btn_center, _ = st.columns([0.08, 0.84, 0.08])
+        _, col_btn_center, _ = st.columns([0.25, 0.50, 0.25])
         with col_btn_center:
             col_s1, col_s2 = st.columns(2, gap="small")
             with col_s1:
